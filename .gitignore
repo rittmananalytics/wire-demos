@@ -1,8 +1,9 @@
-# Per-demo runtime state — restored from _seed/ by reset.sh
+# Per-demo runtime state — restored from _seeds/<demo>/ by reset.sh.
+# Note: */ matches exactly one path component, so these patterns ignore the
+# working copies under demo*/ but leave the _seeds/<demo>/* canonical state
+# tracked (those are two levels deep).
 */.wire/
-*/dbt/target/
-*/dbt/logs/
-*/dbt/dbt_packages/
+*/dbt/
 */dashboards/
 */semantic_layer/
 */warehouse.duckdb
