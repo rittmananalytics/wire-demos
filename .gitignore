@@ -19,6 +19,9 @@ venv/
 # macOS
 .DS_Store
 
+# dbt-core per-install telemetry UUID — varies by machine, must not be tracked
+shared/profiles/.user.yml
+
 # Editor
 .vscode/
 .idea/
