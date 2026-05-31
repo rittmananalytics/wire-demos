@@ -1,0 +1,35 @@
+name: 'acme_data_foundation'
+version: '0.1.0'
+config-version: 2
+
+profile: 'acme'
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+macro-paths: ["macros", "../../shared/macros"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  acme_data_foundation:
+    staging:
+      +materialized: view
+    integration:
+      +materialized: view
+    warehouse:
+      +materialized: table
+
+seeds:
+  acme_data_foundation:
+    shopify_customers:
+      +column_types:
+        id: bigint
+      +quote_columns: false
+    shopify_orders:
+      +column_types:
+        id: bigint
+        customer_id: bigint
+      +quote_columns: false

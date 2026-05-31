@@ -4,6 +4,7 @@
 # tracked (those are two levels deep).
 */.wire/
 */dbt/
+*/dbt_packages/
 */dashboards/
 */semantic_layer/
 */warehouse.duckdb
