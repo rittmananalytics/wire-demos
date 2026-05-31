@@ -1,0 +1,103 @@
+Acme — Current-state architecture deep dive
+Date: 27 January 2026, 14:00–15:30 GMT
+Attendees: Priya Sharma (Acme), Steph Owens (Acme), Mark Rittman (RA), Lydia Blackley (RA)
+
+[14:01]  Mark: Priya, let's walk through what's connected to what today. Start
+         from Shopify.
+
+[14:02]  Priya: Shopify is the system of record for orders and customers. Every
+         order originates there. We have a custom subscription app — built on
+         Shopify's Subscriptions API — that handles the recurring side. Orders
+         go to Shopify, payments go to Stripe. Stripe is the system of record
+         for money.
+
+[14:04]  Mark: And the customer record?
+
+[14:04]  Priya: Both systems have one. We link them on email at signup. Stripe's
+         customer object has the Shopify customer ID in metadata. Mostly.
+
+[14:05]  Steph: That's where DQ-1 comes from. About four percent of joined
+         records don't match. Some are deliberate — staff accounts with
+         different emails on Shopify vs Stripe. Some are bugs from before the
+         metadata link was added in 2023. The pre-2023 records have to be
+         re-linked manually.
+
+[14:06]  Mark: How many records?
+
+[14:07]  Steph: About 800 customers. Manageable.
+
+[14:08]  Priya: For Klaviyo — every Shopify customer is pushed to Klaviyo with
+         the Shopify ID as the external ID. So that join is clean. GA4 is the
+         problem child. We started capturing user_id in 2024 but the historical
+         events from before that have no identifier we can join on. Twelve
+         percent of events.
+
+[14:10]  Mark: For the pipelines themselves — Fivetran today, right?
+
+[14:10]  Priya: Yes, all five sources. Daily syncs except GA4 which is hourly.
+         Lands in BigQuery in a `raw_` schema. From there it's nothing. No
+         transformation. Each team queries the raw schema directly and writes
+         their own SQL.
+
+[14:11]  Mark: That's the part we're replacing. Daily syncs is fine for v1?
+
+[14:11]  Priya: For everything except subscription churn analysis. Cathy wants
+         that hourly. She watches it like a hawk.
+
+[14:12]  Steph: Cathy will live with daily for v1 if the alternative is delayed
+         go-live. I asked her last week.
+
+[14:13]  Mark: Good. Daily for v1 across the board, with hourly as a v2 option
+         for churn specifically. Let's note that.
+
+[14:14]  Lydia: Noted. That goes in OQ-9 — subscription pause vs cancel — too,
+         since the polling frequency affects how quickly we see state changes.
+
+[14:15]  Mark: For Shipstation — what's the rate limit on the API?
+
+[14:15]  Priya: Forty requests per minute. For a backfill of all-time data —
+         we've got about 280,000 shipments — that's painful but not impossible.
+         Maybe two days of pulling in chunks.
+
+[14:16]  Mark: OK. We don't backfill all-time. The board cares about 2024
+         onwards. Steph, do we agree?
+
+[14:17]  Steph: Yes, 2024 onwards is fine. Anything before that is noise.
+
+[14:18]  Mark: That's OQ-11 closed then. 2024-01-01 cutoff for backfill.
+         Shipstation gets… roughly 60,000 shipments. Couple hours of pulling.
+
+[14:19]  Priya: Easy.
+
+[14:20]  Mark: Last big one — duplicate shipments. DQ-3. Same tracking number,
+         different created_at. How many?
+
+[14:20]  Priya: Half a percent. Around 1,400 records over the lifetime. Pattern
+         is Shipstation retrying when the upstream label provider times out.
+         We dedupe on the tracking number and take the earliest created_at.
+
+[14:21]  Mark: That's a clean rule. Goes into the staging model for shipments.
+
+[14:22]  Steph: One more thing — the cancellation reasons. I talked to Cathy
+         yesterday. She likes the three-top-level idea. She had one
+         modification: she wants "didn't drink enough" renamed to "consumption
+         lower than expected." Apparently CS uses that language with customers
+         already.
+
+[14:23]  Mark: Three reasons: price, delivery, consumption. With fourteen
+         sub-tags underneath. OQ-3 closed.
+
+[14:23]  Lydia: That's two of the twelve OQs closed in one session. We're
+         ahead.
+
+[14:24]  Mark: OK, let's stop the formal session there. Priya — credentials.
+         What's the cleanest way for us to access source systems for the
+         discovery sprint?
+
+[14:25]  Priya: I'll give you read-only service accounts for Shopify, Stripe,
+         and Shipstation. Klaviyo and GA4 you can read from the BigQuery raw_
+         schema — that's the path of least resistance. By tomorrow morning.
+
+[14:26]  Mark: Perfect. Thanks both.
+
+[end 14:26]

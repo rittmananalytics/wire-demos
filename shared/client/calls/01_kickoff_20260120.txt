@@ -1,0 +1,89 @@
+Acme Coffee Roasters × Rittman Analytics — Engagement Kick-off
+Date: 20 January 2026, 10:00–11:30 GMT
+Attendees: Becky Hartmann (Acme), Steph Owens (Acme), Priya Sharma (Acme), Mark Rittman (RA), Lydia Blackley (RA)
+
+[10:02]  Mark: Thanks everyone. Becky, do you want to set the scene for the team on
+         the Acme side?
+
+[10:03]  Becky: Sure. So — we've grown from a couple of hundred subscribers in 2019
+         to about 22,000 today. Revenue's £8M ARR. The board wants weekly numbers
+         they can trust, and right now we can't give them that. Stripe and Shopify
+         disagree about how many active subscriptions we have. They disagree by
+         a couple of hundred on any given day. That's a problem.
+
+[10:05]  Mark: That's the gold-layer problem we talked about last month. Steph,
+         when you reconcile manually — what's the source of truth right now?
+
+[10:06]  Steph: Honestly, neither. I download the Stripe export, cross-reference
+         it with Shopify, look for the discrepancies, and spot-check. It takes
+         half a day a week. The biggest source of mismatch is paused subscriptions
+         and free-trial conversions. Shopify thinks a pause is still active.
+         Stripe doesn't.
+
+[10:08]  Becky: Right. And that's just subs. For marketing — Jordan can speak to
+         this better, he's not here today — but the attribution story is just as
+         bad. We can see Klaviyo opens and clicks. We can see GA4 sessions. We
+         can see Stripe revenue. We cannot join them in any reliable way.
+
+[10:10]  Priya: I want to flag something. From an engineering side, my concern is
+         not the build — it's the keep-it-running afterwards. We've had three
+         BI tools in three years. Each one died because nobody could maintain it.
+
+[10:11]  Mark: That's the right concern to have. Two things on that. One, the dbt
+         pattern we use is documented and conventional — you'll be able to read
+         someone else's models without RA in the loop. Two, we build the
+         enablement in from week one. Steph and your team get trained on the
+         conventions, not just shown the output.
+
+[10:13]  Priya: OK. I'm not against. Just flagging.
+
+[10:14]  Becky: Mark, let's talk about the discovery sprint. Two weeks, right?
+
+[10:14]  Mark: Yes. First week is workshops — we get the whole team in a room,
+         walk through every domain, agree the entity model. Second week is
+         building the physical data model and the high-level pipeline design.
+         You get a sign-off pack at the end with everything we'll build.
+
+[10:16]  Becky: And the open questions in the SoW — there are twelve, I think —
+         do those get resolved in discovery?
+
+[10:16]  Mark: Most of them. The two we flagged as build-blockers — OQ-3 on
+         cancellation reasons and OQ-7 on market scope — those have to close
+         before we touch code. The rest we can carry into build if needed.
+
+[10:18]  Steph: Can I add something to OQ-3? I've been thinking about it. We
+         use fourteen reasons in CS, but if you look at the actual data, ten
+         of them are sub-categories of three real reasons: price, delivery, and
+         "didn't drink enough." If we collapse to those three top-level, with
+         the fourteen as sub-tags, I think we could get sign-off from Cathy.
+
+[10:19]  Mark: Three top-level with sub-tags. That's a clean structure. Let's
+         take that to the OQ-3 discovery session.
+
+[10:20]  Becky: Cathy's free Thursday afternoon. Lydia, can you set that up?
+
+[10:20]  Lydia: Will do. I'll get all six discovery sessions on the calendar by
+         end of today.
+
+[10:22]  Becky: One more from me. The CEO — David — he wants to see something
+         tangible at week four. Not a demo of the warehouse. Something he can
+         look at and say "yes, this is what I asked for."
+
+[10:23]  Mark: That's what the mockup phase is for. We can have a non-interactive
+         dashboard mockup for David by end of week three, well within his
+         deadline. It won't have real data, but the shape will be there.
+
+[10:24]  Becky: Good. That's what he needs.
+
+[10:25]  Mark: OK — pricing and contract are done. SoW is signed. Lydia, you'll
+         own the discovery sprint calendar. Becky, you'll own the OQ-3 and OQ-7
+         resolution by end of week one. Anything blocking us from starting
+         Monday?
+
+[10:25]  Becky: No, we're good.
+
+[10:25]  Priya: I'll have the source-system credentials ready by Monday morning.
+
+[10:26]  Mark: Great. Let's stop there. Thanks everyone.
+
+[end 10:26]

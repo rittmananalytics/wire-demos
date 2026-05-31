@@ -1,0 +1,10 @@
+acme:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: ./warehouse.duckdb
+      threads: 4
+      extensions:
+        - httpfs
+        - parquet

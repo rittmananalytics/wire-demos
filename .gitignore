@@ -1,0 +1,27 @@
+# Per-demo runtime state — restored from _seed/ by reset.sh
+*/.wire/
+*/dbt/target/
+*/dbt/logs/
+*/dbt/dbt_packages/
+*/dashboards/
+*/semantic_layer/
+*/warehouse.duckdb
+*/warehouse.duckdb.wal
+*/logs/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+
+# Don't ignore _seed/.gitkeep or expected_artifacts content
+!*/_seed/.gitkeep
+!*/expected_artifacts/**

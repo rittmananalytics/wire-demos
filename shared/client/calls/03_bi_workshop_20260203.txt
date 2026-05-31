@@ -1,0 +1,103 @@
+Acme — BI workshop, dashboards and self-serve
+Date: 3 February 2026, 10:00–12:00 GMT
+Attendees: Becky Hartmann (Acme), Jordan Park (Acme), Steph Owens (Acme), Tom Vickers (Acme), Mark Rittman (RA), Lydia Blackley (RA)
+
+[10:03]  Mark: Today's session is about what David sees on Monday mornings and
+         what the marketing team can answer for themselves. Let's start with
+         David's dashboard. Becky?
+
+[10:04]  Becky: He wants four numbers and four charts. The numbers: MRR,
+         net new customers this week, churn rate, and CAC. The charts: MRR
+         over time, new vs returning revenue split, channel mix, and a top-5
+         products table. He wants it on one page.
+
+[10:06]  Mark: Single page, four KPIs, four visuals. Clean. Time range?
+
+[10:06]  Becky: Default to last 13 weeks. He should be able to change it.
+
+[10:07]  Tom: Can I jam something in? I need MRR with refunds netted off. The
+         current Stripe dashboard shows gross MRR which makes our numbers
+         look better than they are. The board called us on it.
+
+[10:08]  Mark: Net MRR. Refunds netted on a rolling 30-day window?
+
+[10:08]  Tom: Yes. That matches how I report it.
+
+[10:09]  Mark: OK. That closes OQ-6 — refund treatment is net, 30-day rolling.
+         Goes into the MRR mart.
+
+[10:10]  Jordan: Marketing dashboard. The question we get asked weekly is
+         "what's our CAC by channel?" Today the answer is "I'll get back to
+         you in two hours." I want it on a dashboard. Channel breakdown by
+         spend, customers acquired, CAC, and first-month LTV.
+
+[10:11]  Mark: First-month LTV or full LTV?
+
+[10:12]  Jordan: First-month for the dashboard. Full LTV is a separate
+         analysis. Full LTV needs cohort logic that I'd want Steph to own.
+
+[10:13]  Steph: Happy to. Full LTV by cohort goes in the subscriptions
+         dashboard, not the marketing one.
+
+[10:14]  Mark: That's the four dashboards, then — Exec, Subscriptions,
+         Marketing, Fulfilment. Plus the explores for self-serve.
+
+[10:15]  Jordan: On self-serve. The five questions in the SoW — they're not
+         the only questions. They're the ones I picked as representative.
+         What I really want is the marketing team to be able to slice by
+         campaign, by channel, by product, by market, by date, and not need
+         me. If those dimensions are in the explore, the questions answer
+         themselves.
+
+[10:16]  Mark: Five dimensions: campaign, channel, product, market, date. All
+         on the marketing fact. That's a standard star schema. Easy.
+
+[10:17]  Becky: What about market filtering? OQ-7 — we have UK, Ireland,
+         France, Germany. Are all four in v1?
+
+[10:18]  Tom: Finance treats UK and Ireland as one P&L. France and Germany
+         are separate.
+
+[10:19]  Becky: That's not how marketing thinks about it. Marketing treats
+         them as four separate markets.
+
+[10:20]  Jordan: Yes — four. P&L grouping is a finance concern, not a
+         marketing one. The fact table should be by-country-code, and the
+         finance dashboard can group UK+IE if Tom wants.
+
+[10:21]  Mark: Country code on the fact, group by country in the model, and
+         finance has a derived rollup. Four markets in v1, one rollup for
+         finance. OQ-7 closed?
+
+[10:21]  Becky: Closed.
+
+[10:22]  Lydia: That's three OQs in three sessions. We're going to finish
+         discovery clean.
+
+[10:23]  Mark: Looker licences — OQ-10. Becky, your call.
+
+[10:23]  Becky: Edit licences: me, Steph, Jordan, Tom. View licences: the
+         rest of marketing, the rest of ops, David. Probably twelve view
+         licences total. The rest can use scheduled exports.
+
+[10:24]  Mark: That closes OQ-10. We're at four OQs closed in three sessions.
+         Lydia, what's left?
+
+[10:24]  Lydia: Eight open. The remaining ones are smaller — GA4 identity
+         resolution, B2B treatment, Klaviyo event taxonomy, pause vs cancel,
+         Shipstation rate limit (mostly answered last session), and a couple
+         of admin items. None of them are build-blockers any more now that
+         OQ-3 and OQ-7 are closed.
+
+[10:26]  Mark: Good. We're in shape to move from discovery to build on
+         schedule. Becky — anything I'm missing?
+
+[10:26]  Becky: David's mockup. When does he see something?
+
+[10:27]  Mark: Week three. We'll send him a non-interactive HTML mockup of
+         the exec dashboard. Then once the data is real, week eight or nine,
+         he gets the live version.
+
+[10:28]  Becky: Perfect. Thanks everyone.
+
+[end 10:28]
