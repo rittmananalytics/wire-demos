@@ -34,7 +34,7 @@ data_model:
 
 dbt:
   generate: complete
-  validate: failing                 # Wire convention violation in fct_orders.sql
+  validate: failing                 # warehouse schema.yml missing FK relationships test
   review: blocked                   # waiting on validation
   files:
     - models/staging/shopify/stg_shopify__orders.sql
@@ -42,6 +42,7 @@ dbt:
     - models/integration/int_orders.sql
     - models/warehouse/dim_customer.sql
     - models/warehouse/fct_orders.sql
+    - models/warehouse/schema.yml   # incomplete — fct_orders.customer_fk undocumented + untested
   generated_date: 2026-04-25
   last_validation_failure: 2026-04-29
 ```
@@ -54,7 +55,7 @@ dbt:
 | 2026-04-17 | Requirements generated, validated, reviewed and approved | Generate data model |
 | 2026-04-22 | Data model generated, validated, reviewed and approved | Generate dbt models |
 | 2026-04-25 | dbt models generated for staging + integration + warehouse layers | Run dbt-validate |
-| 2026-04-29 | **dbt-validate FAILED** — naming convention violation in fct_orders.sql (`customer_id` should be `customer_fk` per Wire convention) | Fix the FK column name and re-validate |
+| 2026-04-29 | **dbt-validate FAILED** — fct_orders.customer_fk is undocumented in warehouse/schema.yml and has no relationships test against dim_customer.customer_pk (Wire convention requires both) | Update schema.yml and re-validate |
 
 ## Notes
 - Build is otherwise clean: `dbt build` runs green; only the Wire naming convention is violated.

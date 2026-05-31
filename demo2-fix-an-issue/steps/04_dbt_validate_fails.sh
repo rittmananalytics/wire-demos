@@ -9,12 +9,13 @@ source "$SCRIPT_DIR/../../shared/runner.sh"
 section "Step 4 / 9 — /wire:dbt-validate (expecting a failure)"
 
 narrate_long <<'EOF'
-This is the command that flagged the issue. It runs a battery of checks
-against the dbt project — naming conventions, testing coverage,
-documentation, model configuration — and produces a severity-rated
-report. We expect it to fail because the status.md said so.
+This is the command that flagged the issue. It runs the dbt-development
+skill's battery of checks across the project — naming conventions,
+testing coverage, documentation, model configuration — and produces a
+severity-rated report.
 
-Watch the output for which model and which check failed.
+Per status.md the validate is failing on the warehouse schema.yml.
+Wire will say more — read the output carefully.
 EOF
 pause
 
@@ -22,5 +23,5 @@ pause
 run_wire "/wire:dbt-validate releases/01-marketing-mart" || true
 
 echo ""
-narrate "Step 5 will diagnose what Wire just told us."
+narrate "Step 5 will pull out the specific gap and quote the relevant Wire convention."
 pause

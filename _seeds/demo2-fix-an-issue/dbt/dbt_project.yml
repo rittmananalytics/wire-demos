@@ -1,0 +1,40 @@
+name: 'acme_marketing_mart'
+version: '0.1.0'
+config-version: 2
+
+profile: 'acme'
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+analysis-paths: ["analyses"]
+macro-paths: ["macros", "../../shared/macros"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+# For the demo we keep everything in one DuckDB schema (default: main).
+# In a real engagement these would be separated by layer; the demo's
+# focus is the Wire convention violation, not schema isolation.
+models:
+  acme_marketing_mart:
+    staging:
+      +materialized: view
+    integration:
+      +materialized: view
+    warehouse:
+      +materialized: table
+
+seeds:
+  acme_marketing_mart:
+    shopify_customers:
+      +column_types:
+        id: bigint
+      +quote_columns: false
+    shopify_orders:
+      +column_types:
+        id: bigint
+        customer_id: bigint
+      +quote_columns: false

@@ -1,5 +1,12 @@
 version: 2
 
+# NOTE FOR THE DEMO: this schema.yml is deliberately incomplete.
+# fct_orders is documented with only its primary key and no tests on
+# its foreign key. Wire's dbt-validate flags this as a critical issue:
+# every fact-table FK must have a relationships test against the
+# referenced dimension's PK (per Wire's dbt-development conventions).
+# The fix step adds the missing column documentation and tests.
+
 models:
   - name: dim_customer
     description: "Customer dimension with lifetime aggregates"
@@ -26,14 +33,7 @@ models:
         tests:
           - unique
           - not_null
-      - name: order_ts
-        description: "Order creation timestamp"
-        tests:
-          - not_null
-      - name: total_price
-        description: "Order total in source currency"
-        tests:
-          - not_null
-      # Note: the customer FK column is not given a relationships test here
-      # because its name is currently in violation of Wire conventions (see fct_orders.sql).
-      # Demo 2 fixes the column name; a follow-on PR would add the test.
+      # ↓ INCOMPLETE — customer_fk is the foreign key to dim_customer but
+      #   it's not documented here, and there's no relationships test
+      #   against dim_customer.customer_pk. Wire's dbt-validate will flag
+      #   this. Demo step 6 adds the missing entries.

@@ -10,4 +10,4 @@
 | 2026-04-18 10:15 | /wire:data_model-validate | pass | 11 checks passed |
 | 2026-04-22 11:00 | /wire:data_model-review | approved | Reviewed by Steph Owens |
 | 2026-04-25 14:00 | /wire:dbt-generate | complete | 5 dbt models generated across staging / integration / warehouse |
-| 2026-04-29 09:00 | /wire:dbt-validate | fail | Naming convention violation: fct_orders.customer_id should be customer_fk (Wire dbt convention requires _fk suffix on foreign keys) |
+| 2026-04-29 09:00 | /wire:dbt-validate | fail | warehouse/schema.yml incomplete: fct_orders.customer_fk has no column documentation and no relationships test against dim_customer.customer_pk (Wire convention requires both) |

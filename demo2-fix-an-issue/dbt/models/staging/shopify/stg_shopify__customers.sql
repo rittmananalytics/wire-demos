@@ -2,9 +2,8 @@
 -- Renames source columns to Wire conventions (_pk for primary key).
 
 -- Note: this demo uses dbt seeds as the source data, so the staging model
--- ref()s the seed directly. A production engagement would use
--- {{ source('shopify', 'shopify_customers') }} once external ingestion lands
--- the table outside dbt.
+-- ref()s the seed directly. A production engagement would use a source()
+-- macro pointing at the external ingestion table instead.
 
 with source as (
     select * from {{ ref('shopify_customers') }}
