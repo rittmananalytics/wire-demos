@@ -39,11 +39,14 @@ demo_init() {
 
   export DEMO_DIR="$WIRE_DEMOS_ROOT/$demo_dir"
   export DEMO_LOG_DIR="$DEMO_DIR/logs"
-  mkdir -p "$DEMO_LOG_DIR"
 
+  # Reset BEFORE creating logs — reset.sh wipes logs/ so we'd otherwise
+  # create the dir, immediately delete it, and then fail every run_wire call.
   if [ "${DEMO_RESET:-true}" = "true" ]; then
     bash "$WIRE_DEMOS_ROOT/shared/reset.sh" "$demo_dir" >/dev/null
   fi
+
+  mkdir -p "$DEMO_LOG_DIR"
 
   cd "$DEMO_DIR" || return 1
   ok "Initialised demo: $demo_dir   (logs: $DEMO_LOG_DIR)"
@@ -54,15 +57,13 @@ demo_log_dir() {
 }
 
 # run_wire <wire command + args> — execute a /wire:* command via claude -p
-# Logs stdout+stderr to logs/step-<n>-<safe-name>.log
+# Logs stdout+stderr to logs/wire-<timestamp>-<safe-name>.log
 # Returns claude's exit code; on non-zero, prints the last 50 log lines.
-__WIRE_STEP=0
 run_wire() {
-  __WIRE_STEP=$((__WIRE_STEP+1))
   local prompt="$*"
   local safe_name
-  safe_name=$(echo "$prompt" | tr -c '[:alnum:]' '-' | cut -c1-60)
-  local log="${DEMO_LOG_DIR:-/tmp}/step-$(printf '%02d' $__WIRE_STEP)-${safe_name}.log"
+  safe_name=$(echo "$prompt" | tr -c '[:alnum:]' '-' | cut -c1-50)
+  local log="${DEMO_LOG_DIR:-/tmp}/wire-$(date +%s)-${safe_name}.log"
 
   show_command "claude -p \"$prompt\""
 
@@ -73,12 +74,24 @@ run_wire() {
 Approved by demo operator — no changes requested."
   fi
 
+  # Default text output (stream-json requires --verbose; not worth the noise for demos).
+  # --strict-mcp-config + empty mcp-config keeps user-level MCP server tool
+  # schemas out of the prompt (Ahrefs/Atlassian/BigQuery/etc. otherwise inject
+  # tens of thousands of tokens and trip "Prompt is too long"). The Wire plugin
+  # itself is a plugin, not an MCP server, so it still loads.
   if claude -p "$prompt" \
       "${__CLAUDE_MODEL_FLAG[@]}" \
       --permission-mode acceptEdits \
-      --output-format stream-json \
+      --strict-mcp-config \
+      --mcp-config "$WIRE_DEMOS_ROOT/shared/mcp-empty.json" \
       >"$log" 2>&1; then
     ok "claude completed   (log: $(basename "$log"))"
+    # Show a short tail of the actual claude output to give the viewer something to read
+    if [ "${DEMO_MODE:-interactive}" != "silent" ]; then
+      echo ""
+      tail -n 20 "$log" 2>/dev/null | sed 's/^/   │ /'
+      echo ""
+    fi
     return 0
   else
     local rc=$?

@@ -4,7 +4,11 @@ acme:
     dev:
       type: duckdb
       path: ./warehouse.duckdb
-      threads: 4
+      # threads: 1 — seeds and models that depend on them race under
+      # higher concurrency because dbt's DAG only tracks ref() dependencies,
+      # not source() ones. Running serially in the demo guarantees a clean
+      # build. Real engagements with real ingestion don't need this.
+      threads: 1
       extensions:
         - httpfs
         - parquet

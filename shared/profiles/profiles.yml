@@ -1,12 +1,11 @@
-# dbt expects a file called profiles.yml in --profiles-dir. This is a symlink-style
-# include that points at duckdb_profile.yml so we can keep both names available.
+# dbt expects profiles.yml in --profiles-dir.
 acme:
   target: dev
   outputs:
     dev:
       type: duckdb
       path: ./warehouse.duckdb
-      threads: 4
+      threads: 1
       extensions:
         - httpfs
         - parquet
