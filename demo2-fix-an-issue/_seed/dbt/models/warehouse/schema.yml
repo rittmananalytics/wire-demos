@@ -1,0 +1,39 @@
+version: 2
+
+models:
+  - name: dim_customer
+    description: "Customer dimension with lifetime aggregates"
+    columns:
+      - name: customer_pk
+        description: "Primary key — surrogate customer identifier"
+        tests:
+          - unique
+          - not_null
+      - name: email
+        description: "Customer email address"
+      - name: lifetime_orders
+        description: "Count of orders placed by this customer"
+        tests:
+          - not_null
+      - name: lifetime_revenue
+        description: "Sum of order total_price for this customer"
+
+  - name: fct_orders
+    description: "Order fact table — one row per Shopify order, attributed to a customer"
+    columns:
+      - name: order_pk
+        description: "Primary key — Shopify order ID"
+        tests:
+          - unique
+          - not_null
+      - name: order_ts
+        description: "Order creation timestamp"
+        tests:
+          - not_null
+      - name: total_price
+        description: "Order total in source currency"
+        tests:
+          - not_null
+      # Note: the customer FK column is not given a relationships test here
+      # because its name is currently in violation of Wire conventions (see fct_orders.sql).
+      # Demo 2 fixes the column name; a follow-on PR would add the test.

@@ -26,7 +26,10 @@ fi
 
 # Wipe runtime state but never escape the demo dir
 cd "$DEMO_DIR"
-rm -rf .wire dbt/target dbt/logs dbt/dbt_packages dashboards semantic_layer warehouse.duckdb warehouse.duckdb.wal logs 2>/dev/null || true
+rm -rf .wire dbt/target dbt/logs dbt/dbt_packages dashboards semantic_layer logs 2>/dev/null || true
+# DuckDB files can land at the demo root OR inside dbt/ depending on where dbt was invoked.
+# Remove both locations.
+rm -f warehouse.duckdb warehouse.duckdb.wal dbt/warehouse.duckdb dbt/warehouse.duckdb.wal 2>/dev/null || true
 
 # Restore from seed
 # rsync preserves _seed contents into the demo root without copying _seed itself

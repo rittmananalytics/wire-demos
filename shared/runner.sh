@@ -88,15 +88,18 @@ Approved by demo operator — no changes requested."
   fi
 }
 
-# run_dbt <dbt args> — run dbt against the bundled DuckDB profile
+# run_dbt <subcommand> [args] — run dbt against the bundled DuckDB profile.
+# Modern dbt expects --profiles-dir AFTER the subcommand, not as a global flag.
 run_dbt() {
-  local log="${DEMO_LOG_DIR:-/tmp}/dbt-$(date +%s).log"
-  show_command "dbt $*"
-  if dbt --profiles-dir "$WIRE_DEMOS_ROOT/shared/profiles" "$@" 2>&1 | tee "$log"; then
-    ok "dbt completed"
+  if [ $# -eq 0 ]; then err "run_dbt: missing subcommand"; return 1; fi
+  local subcmd="$1"; shift
+  local log="${DEMO_LOG_DIR:-/tmp}/dbt-${subcmd}-$(date +%s).log"
+  show_command "dbt $subcmd $* --profiles-dir $WIRE_DEMOS_ROOT/shared/profiles"
+  if dbt "$subcmd" "$@" --profiles-dir "$WIRE_DEMOS_ROOT/shared/profiles" 2>&1 | tee "$log"; then
+    ok "dbt $subcmd completed"
     return 0
   else
-    err "dbt failed — see $log"
+    err "dbt $subcmd failed — see $log"
     return 1
   fi
 }
