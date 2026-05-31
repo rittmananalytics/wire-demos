@@ -14,6 +14,13 @@ export WIRE_DEMOS_ROOT
 # Source narrator (idempotent)
 source "$__RUNNER_SCRIPT_DIR/narrator.sh"
 
+# Activate the local venv if present so dbt and any Python tools are on PATH.
+# Idempotent: re-sourcing the activate script is harmless.
+if [ -f "$WIRE_DEMOS_ROOT/.venv/bin/activate" ] && [ -z "${VIRTUAL_ENV:-}" ]; then
+  # shellcheck disable=SC1090,SC1091
+  source "$WIRE_DEMOS_ROOT/.venv/bin/activate"
+fi
+
 # Model routing
 DEMO_MODEL="${DEMO_MODEL:-haiku}"
 case "$DEMO_MODEL" in

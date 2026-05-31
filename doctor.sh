@@ -39,21 +39,34 @@ check_cmd_optional() {
 
 check_cmd claude   "Install Claude Code: https://docs.claude.com/en/docs/claude-code"
 check_cmd python3  "Install Python 3.11+"
-check_cmd dbt      "Install dbt-duckdb: pip install dbt-duckdb"
 check_cmd bash     "Run on macOS or Linux with bash 4+"
 
 check_cmd_optional gh    "Install gh for repo operations: https://cli.github.com"
-check_cmd_optional bat   "Install bat for prettier file rendering: brew install bat"
-check_cmd_optional glow  "Install glow for markdown rendering: brew install glow"
+check_cmd_optional bat   "Install bat for prettier file rendering: brew install bat (run \`./setup.sh\`)"
+check_cmd_optional glow  "Install glow for markdown rendering: brew install glow (run \`./setup.sh\`)"
 
-# Wire plugin presence — best-effort check
-if command -v claude >/dev/null 2>&1; then
-  if claude -p "/help" 2>&1 | grep -qi "wire:" ; then
-    ok "Wire plugin appears to be installed in Claude Code"
-  else
-    warn "Wire plugin not detected. Demo 1 will install it; for Demos 2 and 3 it must be present."
-    WARN=$((WARN+1))
-  fi
+# dbt — check venv first, then system
+VENV_DBT="$SCRIPT_DIR/.venv/bin/dbt"
+if [ -x "$VENV_DBT" ]; then
+  DBT_V=$("$VENV_DBT" --version 2>&1 | grep -m1 -i 'core' || echo "unknown")
+  ok "dbt  (venv: $DBT_V)"
+elif command -v dbt >/dev/null 2>&1; then
+  DBT_V=$(dbt --version 2>&1 | grep -m1 -i 'core' || echo "unknown")
+  ok "dbt  (system: $DBT_V)"
+  warn "dbt is installed system-wide rather than in .venv/.  Run \`./setup.sh\` to set up the recommended local venv."
+  WARN=$((WARN+1))
+else
+  err "dbt — not found.  Run \`./setup.sh\` to install dbt-duckdb into a local venv."
+  FAIL=$((FAIL+1))
+fi
+
+# Wire plugin presence — file-system check (more reliable than greping /help)
+PLUGIN_CACHE_DIR="${HOME}/.claude/plugins/cache"
+if [ -d "$PLUGIN_CACHE_DIR" ] && find "$PLUGIN_CACHE_DIR" -maxdepth 4 -type d -name "wire" 2>/dev/null | grep -q .; then
+  ok "Wire plugin found in $PLUGIN_CACHE_DIR"
+else
+  warn "Wire plugin not detected in $PLUGIN_CACHE_DIR.  Demo 1 will install it; Demos 2 and 3 require it pre-installed."
+  WARN=$((WARN+1))
 fi
 
 echo ""

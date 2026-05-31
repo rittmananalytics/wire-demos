@@ -14,17 +14,22 @@ The full design spec for these demos lives in the Wire framework repo at [`wire/
 
 ## Prerequisites
 
+These you must install yourself:
+
 | Tool | Version | Purpose |
 |---|---|---|
 | [Claude Code](https://docs.claude.com/en/docs/claude-code) | Latest | Runs Wire commands headlessly via `claude -p` |
-| Wire plugin | `@3.5.4` (pinned) | The framework itself; installed by Demo 1 |
-| Python | 3.11+ | Seed data generator |
-| [dbt-duckdb](https://github.com/duckdb/dbt-duckdb) | 1.8+ | Local warehouse engine |
-| `bash` | 4+ | Runner / narrator scripts |
-| `gh` (optional) | Latest | For cloning if you don't already have the repo |
-| `bat` or `glow` (optional) | Any | Prettier file rendering during narration |
+| Python | 3.11+ | Seed data generator, dbt host |
+| `bash` | 4+ | Runner / narrator scripts (macOS ships an older version that still works) |
 
-Run `make doctor` to verify everything is in place before starting a demo.
+Everything else is handled by `./setup.sh` / `make setup`:
+
+| Tool | Installed by setup |
+|---|---|
+| [dbt-duckdb](https://github.com/duckdb/dbt-duckdb) ≥ 1.8 | `pip install` into local `.venv/` |
+| `faker`, `pandas` | Local `.venv/` (for the seed-data generator) |
+| `bat`, `glow` (optional) | Homebrew on macOS, `apt` on Linux |
+| Wire plugin | Demo 1 installs it; setup checks for it |
 
 ---
 
@@ -33,9 +38,12 @@ Run `make doctor` to verify everything is in place before starting a demo.
 ```bash
 git clone https://github.com/rittmananalytics/wire-demos.git
 cd wire-demos
-make doctor       # Verify prereqs
+make setup        # One-time: creates .venv/, installs dbt-duckdb + tools
+make doctor       # Verify everything is in place
 make demo1        # Run the full-lifecycle demo
 ```
+
+`make setup` is idempotent — re-running is safe. It's also a dependency of `make demo1/2/3`, so if you skip it you'll be prompted to run it.
 
 Each demo is fully isolated under its own folder and re-runnable. `make reset` wipes generated state and restores starting conditions.
 

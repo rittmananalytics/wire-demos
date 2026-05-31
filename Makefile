@@ -1,17 +1,23 @@
-.PHONY: help doctor demo1 demo2 demo3 reset reset-demo1 reset-demo2 reset-demo3 validate clean
+.PHONY: help setup doctor demo1 demo2 demo3 reset reset-demo1 reset-demo2 reset-demo3 validate clean
 
 SHELL := /bin/bash
 
 help:
 	@echo "Wire Framework Demos"
 	@echo ""
-	@echo "Targets:"
-	@echo "  make doctor      Verify prereqs (claude, dbt, python, gh)"
-	@echo "  make demo1       Run Demo 1 — Full lifecycle (~10 min)"
-	@echo "  make demo2       Run Demo 2 — Fix an issue (~5 min)"
-	@echo "  make demo3       Run Demo 3 — Dashboard-first (~14 min)"
+	@echo "First-time setup:"
+	@echo "  make setup       Install all prereqs (Python venv + dbt-duckdb + optional tools)"
+	@echo "  make doctor      Verify prereqs are in place"
+	@echo ""
+	@echo "Run a demo:"
+	@echo "  make demo1       Demo 1 — Full lifecycle (~10 min)"
+	@echo "  make demo2       Demo 2 — Fix an issue (~5 min)"
+	@echo "  make demo3       Demo 3 — Dashboard-first (~14 min)"
+	@echo ""
+	@echo "Maintenance:"
 	@echo "  make reset       Reset all three demos to starting state"
 	@echo "  make validate    Run validate.sh on all three demos (CI)"
+	@echo "  make clean       Reset + remove warehouse files and logs"
 	@echo ""
 	@echo "Environment:"
 	@echo "  DEMO_MODE=interactive|auto|silent     (default: interactive)"
@@ -19,8 +25,17 @@ help:
 	@echo "  DEMO_MODEL=haiku|sonnet|opus          (default: haiku)"
 	@echo "  DEMO_RESET=true|false                 (default: true)"
 
-doctor:
+setup:
+	@bash setup.sh
+
+# doctor depends on setup having been run (idempotent — setup is fast if already done)
+doctor: .venv
 	@bash doctor.sh
+
+# .venv is the sentinel that proves setup has run successfully
+.venv:
+	@echo "▸ .venv/ not present — running setup first"
+	@bash setup.sh
 
 demo1: doctor
 	@bash demo1-full-lifecycle/demo1.sh
@@ -48,5 +63,5 @@ validate:
 	@bash demo3-dashboard-first/validate.sh
 
 clean: reset
-	@rm -rf */logs */warehouse.duckdb
+	@rm -rf */logs */warehouse.duckdb */warehouse.duckdb.wal
 	@echo "Cleaned generated state across all demos"

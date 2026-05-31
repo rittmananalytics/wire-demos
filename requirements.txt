@@ -1,0 +1,10 @@
+# Python dependencies for the Wire demos.
+# Installed into a local .venv/ by setup.sh.
+
+# Local warehouse engine for the demos
+dbt-duckdb>=1.8,<2.0
+
+# Used by shared/client/sources/generate.py to produce deterministic seed data
+# (Faker for realistic names/emails, pandas for CSV writing)
+faker>=24.0
+pandas>=2.0
