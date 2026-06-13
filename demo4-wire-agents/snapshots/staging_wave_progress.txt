@@ -1,0 +1,16 @@
+Wave 2a — Staging layer  (3 agents running in parallel)
+─────────────────────────────────────────────────────
+
+[staging 1/3] starting...  stg_shopify__orders, stg_shopify__order_items,
+                            stg_shopify__customers, stg_shopify__products + seeds
+[staging 2/3] starting...  stg_shopify__refunds, stg_netsuite__transactions,
+                            stg_netsuite__items, stg_netsuite__customers
+[staging 3/3] starting...  stg_klaviyo__events, stg_klaviyo__campaigns, stg_ga4__sessions
+
+All 3 staging agents running. Waiting for wave to complete...
+
+✓ [staging 1/3] complete  — 4 models + 2 seeds written
+✓ [staging 2/3] complete  — 4 models written
+✓ [staging 3/3] complete  — 3 models written
+
+Wave 2a complete.  11 staging models + 2 seeds.  Proceeding to integration layer.

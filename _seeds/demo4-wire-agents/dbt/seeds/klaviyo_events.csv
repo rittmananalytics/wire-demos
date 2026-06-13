@@ -1,0 +1,16 @@
+event_id,person_id,campaign_id,event_type,occurred_at,email
+KE001,KP001,KC002,email_opened,2026-01-10 09:45:00,alice.t@example.com
+KE002,KP001,KC002,email_clicked,2026-01-10 10:02:00,alice.t@example.com
+KE003,KP003,KC002,email_opened,2026-01-10 09:51:00,carol.h@example.com
+KE004,KP003,KC002,email_clicked,2026-01-10 10:15:00,carol.h@example.com
+KE005,KP005,KC002,email_opened,2026-01-10 10:30:00,eve.m@example.com
+KE006,KP005,KC002,email_clicked,2026-01-10 11:00:00,eve.m@example.com
+KE007,KP009,KC003,email_opened,2026-01-15 10:20:00,isla.b@example.com
+KE008,KP009,KC003,email_clicked,2026-01-15 10:35:00,isla.b@example.com
+KE009,KP015,KC003,email_opened,2026-01-15 10:45:00,olivia.c@example.com
+KE010,KP015,KC003,email_clicked,2026-01-15 11:00:00,olivia.c@example.com
+KE011,KP006,KC004,email_opened,2026-01-20 11:30:00,frank.j@example.com
+KE012,KP008,KC001,email_opened,2026-01-05 08:30:00,henry.l@example.com
+KE013,KP011,KC002,email_opened,2026-01-10 09:55:00,kate.r@example.com
+KE014,KP011,KC002,email_clicked,2026-01-10 10:20:00,kate.r@example.com
+KE015,KP013,KC002,email_opened,2026-01-10 10:05:00,mia.e@example.com

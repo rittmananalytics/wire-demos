@@ -1,0 +1,3 @@
+refund_id,order_id,created_at,refund_amount,reason,note
+R001,O1013,2026-01-20 10:00:00,430.00,customer_changed_mind,Customer requested return within 14 days
+R002,O1002,2026-01-15 14:30:00,89.99,defective,Sole delamination reported

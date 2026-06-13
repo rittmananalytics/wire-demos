@@ -1,0 +1,11 @@
+item_id,sku,description,category,unit_cost,is_active
+NI001,ALP-NVY-M,Alpine Base Layer Navy M,base_layer,42.00,true
+NI002,TRH-GRY-M,Trail Runner Hiking Boot Grey M,footwear,55.00,true
+NI003,MNT-CAP-OS,Mountain Cap One-Size,accessories,12.50,true
+NI004,RCK-HNS-M,Rock Harness M,equipment,78.00,true
+NI005,PKJ-BLK-L,Peak Jacket Black Large,jackets,95.00,true
+NI006,SUM-PKG-OS,Summer Camping Package,equipment,88.00,true
+NI007,WIN-BND-XS,Winter Bundle XS,base_layer,110.00,true
+NI008,PCK-BLU-OS,Peak Camping Kit Blue One-Size,equipment,195.00,true
+NI009,PRO-PKG-OS,Professional Package One-Size,equipment,280.00,true
+NI010,KDS-TRL-OS,Kids Trail Boot,footwear,38.00,false

@@ -1,0 +1,6 @@
+netsuite_customer_id,email,shopify_customer_id,company_name,is_wholesale
+NC001,carol.h@example.com,C003,,false
+NC002,isla.b@example.com,C009,,false
+NC003,olivia.c@example.com,C015,,false
+NC004,peak-outdoor-ltd@trade.com,,WHOLESALE001,Peak Outdoor Ltd,true
+NC005,summit-sports@trade.com,,WHOLESALE002,Summit Sports,true

@@ -1,0 +1,11 @@
+product_id,title,product_type,vendor,status,created_at,published_at
+P001,Alpine Base Layer,base_layer,Peak Retail,active,2023-06-01 09:00:00,2023-06-01 10:00:00
+P002,Trail Runner Hiking Boot,footwear,Peak Retail,active,2023-06-01 09:00:00,2023-06-01 10:00:00
+P003,Mountain Accessories Pack,accessories,Peak Retail,active,2023-07-15 09:00:00,2023-07-15 10:00:00
+P004,Rock Harness,equipment,Peak Retail,active,2023-08-01 09:00:00,2023-08-01 10:00:00
+P005,Peak Jacket,jackets,Peak Retail,active,2023-09-01 09:00:00,2023-09-01 10:00:00
+P006,Summer Camping Package,equipment,Peak Retail,active,2023-10-01 09:00:00,2023-10-01 10:00:00
+P007,Winter Bundle,base_layer,Peak Retail,active,2023-10-15 09:00:00,2023-10-15 10:00:00
+P008,Peak Camping Kit,equipment,Peak Retail,active,2023-11-01 09:00:00,2023-11-01 10:00:00
+P009,Professional Package,equipment,Peak Retail,active,2024-01-01 09:00:00,2024-01-01 10:00:00
+P010,Kids Trail Boot,footwear,Peak Retail,archived,2023-06-01 09:00:00,2023-06-01 10:00:00

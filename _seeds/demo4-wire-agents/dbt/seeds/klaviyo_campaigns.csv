@@ -1,0 +1,5 @@
+campaign_id,name,subject,sent_at,send_count,open_rate,click_rate,status
+KC001,Jan Newsletter,New Arrivals — Winter 2026,2026-01-05 08:00:00,8420,0.32,0.08,sent
+KC002,Winter Sale Launch,Up to 30% off selected gear,2026-01-10 09:00:00,8380,0.41,0.15,sent
+KC003,Loyal Customer Offer,Exclusive offer for our best customers,2026-01-15 10:00:00,1240,0.55,0.22,sent
+KC004,Re-engagement,We miss you — here's 10% off,2026-01-20 11:00:00,3100,0.18,0.04,sent

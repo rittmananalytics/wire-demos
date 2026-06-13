@@ -1,0 +1,7 @@
+channel_id,channel_name,channel_group,is_paid
+1,direct,direct,false
+2,email,owned,false
+3,wholesale,wholesale,false
+4,organic_search,organic,false
+5,paid_search,paid,true
+6,paid_social,paid,true

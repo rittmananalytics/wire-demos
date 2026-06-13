@@ -1,4 +1,4 @@
-.PHONY: help setup doctor demo1 demo2 demo3 reset reset-demo1 reset-demo2 reset-demo3 validate clean
+.PHONY: help setup doctor demo1 demo2 demo3 demo4 reset reset-demo1 reset-demo2 reset-demo3 reset-demo4 validate clean
 
 SHELL := /bin/bash
 
@@ -13,6 +13,7 @@ help:
 	@echo "  make demo1       Demo 1 — Full lifecycle (~10 min)"
 	@echo "  make demo2       Demo 2 — Fix an issue (~5 min)"
 	@echo "  make demo3       Demo 3 — Dashboard-first (~14 min)"
+	@echo "  make demo4       Demo 4 — Wire Agents: auto-delegation and fan-out (~3/15 min)"
 	@echo ""
 	@echo "Maintenance:"
 	@echo "  make reset       Reset all three demos to starting state"
@@ -46,7 +47,10 @@ demo2: doctor
 demo3: doctor
 	@bash demo3-dashboard-first/demo3.sh
 
-reset: reset-demo1 reset-demo2 reset-demo3
+demo4: doctor
+	@bash demo4-wire-agents/demo4.sh
+
+reset: reset-demo1 reset-demo2 reset-demo3 reset-demo4
 
 reset-demo1:
 	@bash shared/reset.sh demo1-full-lifecycle
@@ -57,10 +61,14 @@ reset-demo2:
 reset-demo3:
 	@bash shared/reset.sh demo3-dashboard-first
 
+reset-demo4:
+	@bash shared/reset.sh demo4-wire-agents
+
 validate:
 	@bash demo1-full-lifecycle/validate.sh
 	@bash demo2-fix-an-issue/validate.sh
 	@bash demo3-dashboard-first/validate.sh
+	@bash demo4-wire-agents/validate.sh
 
 clean: reset
 	@rm -rf */logs */warehouse.duckdb */warehouse.duckdb.wal

@@ -1,0 +1,14 @@
+→ Delegating to dbt-developer agent
+
+This command auto-delegates to the dbt-developer specialist agent.
+Agent definition found at: agents/dbt-developer/AGENT.md
+
+The dbt-developer agent will:
+  - Read requirements.md, conceptual_model.md, and data_model.md
+  - Generate all dbt models per the Wire 3-layer architecture
+  - Follow dbt-development skill conventions (stg_ → int__ → _dim/_fct)
+  - Write schema.yml with descriptions and tests for every model
+  - Append non-obvious decisions to decisions.md
+  - Update status.md on completion
+
+Launching dbt-developer agent...

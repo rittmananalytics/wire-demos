@@ -1,0 +1,16 @@
+session_id,user_pseudo_id,session_start,channel_grouping,source,medium,campaign,page_views,engaged_sessions
+GS001,U001,2026-01-05 09:00:00,Organic Search,google,organic,,4,1
+GS002,U002,2026-01-06 10:30:00,Email,klaviyo,email,Jan Newsletter,6,1
+GS003,U003,2026-01-07 14:00:00,Direct,,,,3,1
+GS004,U004,2026-01-08 11:15:00,Paid Search,google,cpc,winter_gear,5,1
+GS005,U001,2026-01-10 09:45:00,Email,klaviyo,email,Winter Sale Launch,8,1
+GS006,U005,2026-01-11 13:00:00,Social,instagram,paid,winter_2026,4,1
+GS007,U006,2026-01-12 10:30:00,Organic Search,google,organic,,2,0
+GS008,U002,2026-01-14 15:00:00,Email,klaviyo,email,Winter Sale Launch,7,1
+GS009,U007,2026-01-15 09:00:00,Direct,,,,5,1
+GS010,U003,2026-01-16 14:30:00,Paid Search,google,cpc,jan_sale,6,1
+GS011,U008,2026-01-18 11:00:00,Organic Search,google,organic,,3,1
+GS012,U001,2026-01-20 09:30:00,Email,klaviyo,email,Re-engagement,4,0
+GS013,U009,2026-01-22 10:00:00,Social,facebook,paid,winter_2026,5,1
+GS014,U004,2026-01-23 15:30:00,Direct,,,,3,1
+GS015,U010,2026-01-24 09:15:00,Organic Search,google,organic,,4,1

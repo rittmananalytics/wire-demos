@@ -1,0 +1,131 @@
+version: 2
+
+sources:
+  - name: shopify
+    schema: main
+    tables:
+      - name: shopify_orders
+        columns:
+          - name: order_id
+          - name: customer_id
+          - name: created_at
+          - name: updated_at
+          - name: financial_status
+          - name: total_price
+          - name: subtotal_price
+          - name: total_discounts
+          - name: currency
+          - name: email
+          - name: is_cancelled
+          - name: cancelled_at
+          - name: channel
+          - name: is_wholesale
+
+      - name: shopify_order_items
+        columns:
+          - name: order_item_id
+          - name: order_id
+          - name: product_id
+          - name: quantity
+          - name: unit_price
+          - name: sku
+          - name: title
+
+      - name: shopify_customers
+        columns:
+          - name: customer_id
+          - name: email
+          - name: first_name
+          - name: last_name
+          - name: created_at
+          - name: total_spent
+          - name: orders_count
+          - name: accepts_marketing
+          - name: tags
+
+      - name: shopify_products
+        columns:
+          - name: product_id
+          - name: title
+          - name: product_type
+          - name: vendor
+          - name: status
+          - name: created_at
+          - name: published_at
+
+      - name: shopify_refunds
+        columns:
+          - name: refund_id
+          - name: order_id
+          - name: created_at
+          - name: refund_amount
+          - name: reason
+          - name: note
+
+  - name: netsuite
+    schema: main
+    tables:
+      - name: netsuite_transactions
+        columns:
+          - name: transaction_id
+          - name: shopify_order_id
+          - name: amount
+          - name: transaction_date
+          - name: type
+          - name: status
+          - name: memo
+
+      - name: netsuite_items
+        columns:
+          - name: item_id
+          - name: sku
+          - name: description
+          - name: category
+          - name: unit_cost
+          - name: is_active
+
+      - name: netsuite_customers
+        columns:
+          - name: netsuite_customer_id
+          - name: email
+          - name: shopify_customer_id
+          - name: company_name
+          - name: is_wholesale
+
+  - name: klaviyo
+    schema: main
+    tables:
+      - name: klaviyo_events
+        columns:
+          - name: event_id
+          - name: person_id
+          - name: campaign_id
+          - name: event_type
+          - name: occurred_at
+          - name: email
+
+      - name: klaviyo_campaigns
+        columns:
+          - name: campaign_id
+          - name: name
+          - name: subject
+          - name: sent_at
+          - name: send_count
+          - name: open_rate
+          - name: click_rate
+          - name: status
+
+  - name: ga4
+    schema: main
+    tables:
+      - name: ga4_sessions
+        columns:
+          - name: session_id
+          - name: user_pseudo_id
+          - name: session_start
+          - name: channel_grouping
+          - name: source
+          - name: medium
+          - name: campaign
+          - name: page_views
+          - name: engaged_sessions

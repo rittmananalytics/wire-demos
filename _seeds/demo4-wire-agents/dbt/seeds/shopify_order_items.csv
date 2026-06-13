@@ -1,0 +1,21 @@
+order_item_id,order_id,product_id,quantity,unit_price,sku,title
+OI001,O1001,P005,1,145.00,PKJ-BLK-L,Peak Jacket Black Large
+OI002,O1002,P002,1,99.99,TRH-GRY-M,Trail Runner Hiking Boot Grey M
+OI003,O1003,P001,2,105.25,ALP-NVY-M,Alpine Base Layer Navy M
+OI004,O1004,P008,1,430.00,PCK-BLU-OS,Peak Camping Kit Blue One-Size
+OI005,O1005,P002,1,89.99,TRH-BRN-S,Trail Runner Hiking Boot Brown S
+OI006,O1006,P005,2,140.00,PKJ-GRN-XL,Peak Jacket Green XL
+OI007,O1007,P003,1,75.00,MNT-CAP-OS,Mountain Cap One-Size
+OI008,O1008,P006,1,195.00,SUM-PKG-OS,Summer Camping Package
+OI009,O1009,P001,1,145.00,ALP-WHT-L,Alpine Base Layer White L
+OI010,O1010,P007,1,310.75,WIN-BND-XS,Winter Bundle XS
+OI011,O1011,P003,1,59.99,MNT-GVS-OS,Mountain Gloves One-Size
+OI012,O1012,P005,1,220.00,PKJ-RED-M,Peak Jacket Red M
+OI013,O1013,P008,1,430.00,PCK-BLU-OS,Peak Camping Kit Blue One-Size
+OI014,O1014,P004,1,185.50,RCK-HNS-M,Rock Harness M
+OI015,O1015,P001,2,90.25,ALP-BLK-S,Alpine Base Layer Black S
+OI016,O1016,P009,1,560.00,PRO-PKG-OS,Professional Package One-Size
+OI017,O1017,P002,1,99.00,TRH-GRY-L,Trail Runner Hiking Boot Grey L
+OI018,O1018,P001,1,122.50,ALP-NVY-XS,Alpine Base Layer Navy XS
+OI019,O1019,P003,1,75.00,MNT-HAT-OS,Mountain Hat One-Size
+OI020,O1020,P005,1,220.00,PKJ-BLK-XL,Peak Jacket Black XL

@@ -1,0 +1,16 @@
+customer_id,email,first_name,last_name,created_at,total_spent,orders_count,accepts_marketing,tags
+C001,alice.t@example.com,Alice,Thompson,2024-03-01 10:00:00,312.50,4,true,loyal
+C002,ben.p@example.com,Ben,Phillips,2024-04-12 14:23:00,89.99,1,false,
+C003,carol.h@example.com,Carol,Hughes,2024-01-15 09:11:00,578.00,7,true,loyal,vip
+C004,dan.w@example.com,Dan,Williams,2024-05-22 16:45:00,145.00,2,true,
+C005,eve.m@example.com,Eve,Morris,2024-02-28 11:30:00,430.25,5,true,loyal
+C006,frank.j@example.com,Frank,Jones,2024-06-01 08:15:00,59.99,1,false,
+C007,grace.k@example.com,Grace,King,2024-03-17 13:00:00,210.00,3,true,
+C008,henry.l@example.com,Henry,Lee,2024-07-05 17:55:00,99.00,1,false,
+C009,isla.b@example.com,Isla,Brown,2024-01-08 10:22:00,890.00,9,true,loyal,vip
+C010,james.d@example.com,James,Davies,2024-08-11 09:40:00,180.50,2,true,
+C011,kate.r@example.com,Kate,Roberts,2024-02-14 12:05:00,355.75,4,true,loyal
+C012,liam.t@example.com,Liam,Taylor,2024-09-03 15:30:00,75.00,1,false,
+C013,mia.e@example.com,Mia,Evans,2024-04-25 14:10:00,520.00,6,true,loyal
+C014,noah.w@example.com,Noah,Wilson,2024-10-07 11:45:00,240.00,3,true,
+C015,olivia.c@example.com,Olivia,Clarke,2024-03-30 16:20:00,1120.00,12,true,loyal,vip

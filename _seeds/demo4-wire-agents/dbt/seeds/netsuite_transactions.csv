@@ -1,0 +1,11 @@
+transaction_id,shopify_order_id,amount,transaction_date,type,status,memo
+NT001,O1001,145.00,2026-01-05,SalesOrder,posted,Shopify order O1001
+NT002,O1002,89.99,2026-01-06,SalesOrder,posted,Shopify order O1002
+NT003,O1003,210.50,2026-01-07,SalesOrder,posted,Shopify order O1003
+NT004,O1004,430.00,2026-01-08,SalesOrder,posted,Shopify order O1004
+NT005,O1005,89.99,2026-01-09,SalesOrder,posted,Shopify order O1005
+NT006,O1007,75.00,2026-01-11,SalesOrder,posted,Shopify order O1007
+NT007,O1010,310.75,2026-01-14,SalesOrder,posted,Shopify order O1010
+NT008,O1013,-430.00,2026-01-20,CreditMemo,posted,Refund for O1013
+NT009,O1016,560.00,2026-01-20,SalesOrder,posted,Shopify order O1016
+NT010,O1020,220.00,2026-01-24,SalesOrder,posted,Shopify order O1020

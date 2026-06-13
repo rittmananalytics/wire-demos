@@ -7,6 +7,7 @@ Three self-contained demos of the [Wire Framework](https://github.com/rittmanana
 | [Demo 1 — Full lifecycle](demo1-full-lifecycle/) | `full_platform` | ~10 min | Install → engagement setup → playbook → requirements → design → dbt → planted fault → fix → semantic layer → dashboard mockup |
 | [Demo 2 — Fix an issue](demo2-fix-an-issue/) | `dbt_development` | ~5 min | `/wire:start` on an in-flight project → `dbt-validate` catches a Wire convention violation → fix → re-validate |
 | [Demo 3 — Dashboard-first](demo3-dashboard-first/) | `dashboard_first` | ~14 min | Mockups → viz catalog → data model → seed data → dbt → semantic layer → dashboards → real-data refactor |
+| [Demo 4 — Wire Agents](demo4-wire-agents/) | `full_platform` | ~3/15 min | Auto-delegation → `/wire:delegate` fan-out plan → 3+1+2 parallel `dbt-developer` agents → `dbt build` |
 
 The full design spec for these demos lives in the Wire framework repo at [`wire/docs/wire-demos-build-playbook.md`](https://github.com/rittmananalytics/wire/blob/main/wire/docs/wire-demos-build-playbook.md).
 

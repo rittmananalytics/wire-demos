@@ -1,0 +1,40 @@
+Delegation plan — Peak Retail Data Foundation / 01-peak-retail-analytics
+─────────────────────────────────────────────────────────────────────────
+
+Step 1 (sequential):
+  pipeline-engineer  →  pipeline-generate
+                        (Shopify, NetSuite, Klaviyo, GA4 connectors via Fivetran)
+  Subagent: 1
+
+Step 2 (multi-wave fan-out, starts after Step 1):
+
+  Wave 2a — Staging layer  (3 parallel agents):
+    dbt-developer [staging 1/3]  →  stg_shopify__orders, stg_shopify__order_items,
+                                     stg_shopify__customers, stg_shopify__products  (+2 seeds)
+    dbt-developer [staging 2/3]  →  stg_shopify__refunds, stg_netsuite__transactions,
+                                     stg_netsuite__items, stg_netsuite__customers
+    dbt-developer [staging 3/3]  →  stg_klaviyo__events, stg_klaviyo__campaigns,
+                                     stg_ga4__sessions
+
+  Wave 2b — Integration layer  (1 agent, starts after Wave 2a):
+    dbt-developer [integration 1/1]  →  int__customer_unified,
+                                         int__order_financial,
+                                         int__marketing_attribution
+
+  Wave 2c — Warehouse layer  (2 parallel agents, starts after Wave 2b):
+    dbt-developer [warehouse 1/2]  →  customer_dim, product_dim, channel_dim,
+                                       orders_fct, order_items_fct
+    dbt-developer [warehouse 2/2]  →  daily_revenue_fct, email_performance_fct,
+                                       marketing_spend_fct, customer_ltv_fct
+
+  Total dbt-developer agents: 6  (3 + 1 + 2)
+
+Step 3 (parallel, starts after Step 2):
+  3a  orchestration-engineer    →  orchestration-generate
+  3b  semantic-layer-developer  →  semantic_layer-generate
+  Subagents: 2 parallel
+
+Total: 9 specialist agents across 5 execution stages.
+Review commands stay in this session.
+
+Confirm? [y/n]

@@ -1,0 +1,7 @@
+category_id,category_name,category_group,is_seasonal
+1,jackets,outerwear,true
+2,footwear,footwear,false
+3,base_layer,apparel,true
+4,accessories,accessories,false
+5,equipment,hard_goods,false
+6,other,other,false
