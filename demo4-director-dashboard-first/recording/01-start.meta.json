@@ -1,0 +1,15 @@
+{
+  "id": "start",
+  "say": "We've signed a new engagement with Claybrook Media Group. The SOW is in client/claybrook_sow.md. Set it up as a dashboard-first release on seed data. No Jira, Linear, document store or Fathom call sync, and work on a new git branch. I'll direct the work from here, so run each piece of work as a lane I can follow in Wire Studio, and use made-up names for advertisers and publications in any sample data.",
+  "session_id": "849ecc0b-5400-4219-9391-55e1dfcc6a57",
+  "result": {
+    "subtype": "success",
+    "is_error": false,
+    "duration_ms": 40984,
+    "total_cost_usd": 0.7785352000000001,
+    "num_turns": 14
+  },
+  "duration_s": 42,
+  "opens": [],
+  "git_head": "8521e9c"
+}

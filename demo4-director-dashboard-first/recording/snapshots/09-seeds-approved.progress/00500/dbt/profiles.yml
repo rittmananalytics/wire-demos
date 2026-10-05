@@ -1,0 +1,7 @@
+claybrook:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: "target/claybrook.duckdb"
+      threads: 4

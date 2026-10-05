@@ -1,0 +1,20 @@
+dashboard_page,visualization_name,chart_type,measures,dimensions
+Campaign Performance,Impressions Delivered,KPI tile,impressions_delivered,
+Campaign Performance,Fill Rate,KPI tile,fill_rate_pct,
+Campaign Performance,Average CPM,KPI tile,cpm_gbp,
+Campaign Performance,Revenue Delivered,KPI tile,revenue_gbp,
+Campaign Performance,Active Campaigns,KPI tile,active_campaign_count,
+Campaign Performance,Impressions: Delivered vs Eligible,line,impressions_delivered; impressions_eligible,date (week)
+Campaign Performance,Revenue Share by Advertiser,doughnut,revenue_gbp,advertiser
+Campaign Performance,Fill Rate by Publication,bar,fill_rate_pct,publication
+Campaign Performance,Average CPM by Week,line,cpm_gbp,date (week)
+Campaign Performance,Campaign Performance Detail,table,impressions_delivered; fill_rate_pct; cpm_gbp; revenue_gbp,campaign; advertiser; campaign_status
+Audience Engagement,Page Views,KPI tile,page_views,
+Audience Engagement,Sessions,KPI tile,sessions,
+Audience Engagement,Unique Readers,KPI tile,unique_readers,
+Audience Engagement,Avg Time on Page,KPI tile,avg_time_on_page_seconds,
+Audience Engagement,Page Views & Sessions by Day,line,page_views; sessions,date (day)
+Audience Engagement,Page Views by Publication,doughnut,page_views,publication
+Audience Engagement,Sessions by Publication,bar,sessions,publication
+Audience Engagement,Avg Time on Page by Section,horizontal bar,avg_time_on_page_seconds,section
+Audience Engagement,Top Articles by Engagement,table,page_views; sessions; unique_readers; avg_time_on_page_seconds,article; publication; section

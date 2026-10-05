@@ -31,3 +31,8 @@ shared/profiles/.user.yml
 # Don't ignore _seed/.gitkeep or expected_artifacts content
 !*/_seed/.gitkeep
 !*/expected_artifacts/**
+
+# Demo 4: the working client repo is rebuilt from recording/snapshots/
+demo4-director-dashboard-first/workspace/
+demo4-director-dashboard-first/record.log
+demo4-director-dashboard-first/recording/*.jsonl

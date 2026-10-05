@@ -1,0 +1,70 @@
+name: 'claybrook'
+version: '1.0.0'
+config-version: 2
+
+profile: 'claybrook'
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+test-paths: ["tests"]
+analysis-paths: ["analyses"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+# Date spine bounds for date_dim. Covers the seed date range
+# (2026-09-01 to 2026-09-30). spine_end_date is exclusive.
+vars:
+  spine_start_date: '2026-09-01'
+  spine_end_date: '2026-10-01'
+
+models:
+  claybrook:
+    staging:
+      +materialized: view
+      +tags: ['staging']
+    warehouse:
+      +materialized: table
+      +tags: ['warehouse']
+
+seeds:
+  claybrook:
+    campaign:
+      +column_types:
+        campaign_id: varchar
+        campaign: varchar
+        advertiser: varchar
+        agency: varchar
+        campaign_status: varchar
+        publication: varchar
+        booking_start_date: date
+        booking_end_date: date
+        booked_impression_goal: bigint
+        rate_card_cpm_gbp: 'decimal(10,2)'
+    campaign_performance:
+      +column_types:
+        campaign_id: varchar
+        date: date
+        impressions_delivered: bigint
+        impressions_eligible: bigint
+        revenue_gbp: 'decimal(12,2)'
+    article:
+      +column_types:
+        article_id: varchar
+        article: varchar
+        publication: varchar
+        section: varchar
+        author: varchar
+        publish_date: date
+    page_engagement:
+      +column_types:
+        article_id: varchar
+        date: date
+        page_views: bigint
+        sessions: bigint
+        unique_readers: bigint
+        total_time_on_page_seconds: bigint

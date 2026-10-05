@@ -1,0 +1,15 @@
+{
+  "id": "confirm",
+  "say": "Yes, go ahead with those settings.",
+  "session_id": "849ecc0b-5400-4219-9391-55e1dfcc6a57",
+  "result": {
+    "subtype": "success",
+    "is_error": false,
+    "duration_ms": 66055,
+    "total_cost_usd": 1.1730488,
+    "num_turns": 9
+  },
+  "duration_s": 67,
+  "opens": [],
+  "git_head": "8521e9c"
+}

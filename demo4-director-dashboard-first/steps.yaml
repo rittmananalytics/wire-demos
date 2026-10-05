@@ -1,0 +1,79 @@
+# Demo 4: release director, dashboard_first, Claybrook Media Group.
+# Each step is one message the release director types. `kind: claude` (the
+# default) runs it in Claude Code with Wire; `kind: studio` stands for the
+# /wire-studio command; `open` lists what the replay opens in the browser
+# after the step's reply: studio, mock (the newest dashboard mockup) or a path
+# under the workspace.
+
+steps:
+  - id: start
+    say: >-
+      We've signed a new engagement with Claybrook Media Group. The SOW is in
+      client/claybrook_sow.md. Set it up as a dashboard-first release on seed
+      data. No Jira, Linear, document store or Fathom call sync, and work on a
+      new git branch. I'll direct the work from here, so run each piece of work as a lane I
+      can follow in Wire Studio, and use made-up names for advertisers and
+      publications in any sample data.
+
+  - id: confirm
+    say: Yes, go ahead with those settings.
+    hide: [em-dash, data model reference library, data-model-registry]
+
+  - id: studio
+    kind: studio
+    say: /wire-studio
+    open: [studio]
+
+  - id: requirements
+    say: Yes, go ahead with the requirements.
+    hide: [em-dash]
+
+  - id: requirements-approved
+    say: >-
+      Priya Shah, Claybrook's commercial director, has approved the
+      requirements, and she will approve the mockups too. For engagement, show
+      page views, sessions, unique readers and average time on page; the other
+      questions can wait for the mockup review. Start the conceptual model and
+      the mockups as two lanes now. You have my go-ahead for that run plan.
+    hide: [em-dash]
+    open: [mock]
+
+  - id: mockup-feedback
+    say: >-
+      Priya's feedback on round 1: show average CPM as a weekly trend line
+      instead of a bar chart, and move the detail table to the bottom of the
+      page. Everything else stays: keep the two extra headline figures, the
+      filters (no agency filter on Audience Engagement), one page per
+      dashboard and your formulas for CPM and fill rate. She approves the
+      conceptual model as it is, with pages kept as part of each article.
+      Please do round 2.
+    hide: [em-dash]
+    open: [mock]
+
+  - id: mockups-approved
+    say: >-
+      Priya has approved round 2 in writing. Leave the Audience Engagement
+      table where it is. Carry on through the viz catalog, the data model and
+      the seed data as lanes; you have my go-ahead for that run plan. Stop when
+      the data model and seed data are ready for approval.
+    hide: [em-dash]
+
+  - id: data-model-approved
+    say: >-
+      Priya accepts all four defaults, including the upper-bound label for
+      unique readers. The data model is approved. Go ahead with the seed data,
+      then stop for my review.
+    hide: [em-dash]
+
+  - id: seeds-approved
+    say: >-
+      The seed data is approved. The totals are fine as they are, and so are
+      the advertiser names. Build the dbt project on the seed data using a
+      local DuckDB database, nothing against BigQuery or any client system,
+      then run dbt seed and dbt build so we can see it works end to end. You
+      have my go-ahead for that run plan.
+    hide: [em-dash]
+
+  - id: wrap-up
+    say: Where are we, and what's next?
+    open: [studio]

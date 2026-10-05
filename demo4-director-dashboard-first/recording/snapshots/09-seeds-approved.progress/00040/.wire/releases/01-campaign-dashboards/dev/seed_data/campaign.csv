@@ -1,0 +1,32 @@
+campaign_id,campaign,advertiser,agency,campaign_status,publication,booking_start_date,booking_end_date,booked_impression_goal,rate_card_cpm_gbp
+CMP001,Autumn Sparkling Launch,Northwind Beverages,Mercer Media,Active,The Harbour Dispatch,2026-09-01,2026-09-30,12096000,7.40
+CMP002,Winter Drive Event,Vellmont Motors,Halcyon Partners,Active,Metro Ledger,2026-09-01,2026-09-30,9072000,8.10
+CMP003,Spring Collection Reveal,Harlow & Finch,Quayside Media,Active,The Coastline Review,2026-09-01,2026-09-30,9396000,6.20
+CMP004,City Breaks Always-On,Brightsail Travel,,Active,Evening Compass,2026-09-01,2026-09-30,7884000,5.60
+CMP005,Festive Pantry Push,Carraway Foods,Bowland & Rae,Pending,Highgrove Weekly,2026-09-01,2026-10-31,5184000,6.90
+CMP006,Savings Switch Q4,Meridian Financial,Ashworth Media,Active,The Harbour Dispatch,2026-09-01,2026-09-30,4428000,6.40
+CMP007,Garden Season Teaser,Pinevale Homes,Tindall Group,Paused,Metro Ledger,2026-09-01,2026-09-30,3132000,5.90
+CMP008,Radiance Skincare Drop,Lumira Cosmetics,,Completed,The Coastline Review,2026-08-20,2026-09-26,864000,6.10
+CMP009,Coastal Weekend Escapes,Brightsail Travel,Quayside Media,Active,The Harbour Dispatch,2026-09-01,2026-09-30,453600,6.24
+CMP010,Electric Range Reveal,Vellmont Motors,Halcyon Partners,Active,Metro Ledger,2026-09-01,2026-09-30,367200,6.88
+CMP011,Sparkling Festive Gifting,Northwind Beverages,Mercer Media,Active,The Coastline Review,2026-09-01,2026-09-30,280800,5.78
+CMP012,Heritage Kitchen Range,Saltmarsh Kitchens,Bowland & Rae,Active,Evening Compass,2026-09-01,2026-09-30,453600,6.21
+CMP013,Autumn Trail Collection,Oakridge Outdoors,,Active,Highgrove Weekly,2026-09-01,2026-09-30,842400,7.10
+CMP014,Home Cover Refresh,Verity Insurance,Ashworth Media,Active,The Harbour Dispatch,2026-09-01,2026-09-30,648000,7.64
+CMP015,City Living Showcase,Castleton Estates,Tindall Group,Active,Metro Ledger,2026-09-01,2026-09-30,421200,5.52
+CMP016,Single Origin Launch,Brightleaf Tea,Mercer Media,Active,The Coastline Review,2026-09-01,2026-09-30,367200,6.51
+CMP017,Tailored Suiting Edit,Fenwick & Mabley,Quayside Media,Active,Evening Compass,2026-09-01,2026-09-30,464400,6.18
+CMP018,Green Tariff Switch,Calder Energy,Ashworth Media,Active,Highgrove Weekly,2026-09-01,2026-09-30,367200,7.43
+CMP019,Studio Headphones Drop,Thorne Audio,,Active,The Harbour Dispatch,2026-09-01,2026-09-30,896400,5.89
+CMP020,Weekend Breaks Promo,Brightsail Travel,Quayside Media,Active,Metro Ledger,2026-09-01,2026-09-30,442800,7.97
+CMP021,New Model Test Drive,Vellmont Motors,Halcyon Partners,Active,The Coastline Review,2026-09-01,2026-09-30,734400,6.80
+CMP022,Seasonal Pantry Staples,Carraway Foods,Bowland & Rae,Active,Evening Compass,2026-09-01,2026-09-30,777600,6.08
+CMP023,Everyday Savings Push,Meridian Financial,Ashworth Media,Active,Highgrove Weekly,2026-09-01,2026-09-30,756000,5.93
+CMP024,Spring Homeware Preview,Pinevale Homes,Tindall Group,Active,The Harbour Dispatch,2026-09-01,2026-09-30,572400,5.84
+CMP025,Radiance Night Serum,Lumira Cosmetics,Mercer Media,Active,Metro Ledger,2026-09-01,2026-09-30,777600,6.31
+CMP026,Craft Soda Sampler,Northwind Beverages,Mercer Media,Active,The Coastline Review,2026-09-01,2026-09-30,432000,5.66
+CMP027,Outdoor Gear Clearance,Oakridge Outdoors,,Active,Evening Compass,2026-09-01,2026-09-30,669600,7.09
+CMP028,Boutique Stays Feature,Castleton Estates,Tindall Group,Paused,Highgrove Weekly,2026-09-01,2026-09-30,550800,5.64
+CMP029,Loose Leaf Winter Blend,Brightleaf Tea,Mercer Media,Paused,The Harbour Dispatch,2026-09-01,2026-09-30,680400,7.83
+CMP030,Formalwear Festive Push,Fenwick & Mabley,Quayside Media,Completed,Metro Ledger,2026-08-20,2026-09-22,853200,5.96
+CMP031,Smart Home Energy Bundle,Calder Energy,Ashworth Media,Pending,The Coastline Review,2026-09-01,2026-10-31,756000,7.41

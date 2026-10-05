@@ -8,3 +8,7 @@ dbt-duckdb>=1.8,<2.0
 # (Faker for realistic names/emails, pandas for CSV writing)
 faker>=24.0
 pandas>=2.0
+
+# Demo 4 replay (terminal rendering, step script)
+rich>=13.0
+pyyaml>=6.0
