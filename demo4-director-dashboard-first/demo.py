@@ -21,6 +21,7 @@ import os
 import re
 import shutil
 import signal
+import socket
 import subprocess
 import sys
 import termios
@@ -341,22 +342,46 @@ def open_target(target: str) -> None:
         console.print(Text(f"[would open {target}]", style="dim"))
         return
     if target == "studio":
+        ensure_studio()
         subprocess.run(["open", STUDIO_URL])
     else:
         subprocess.run(["open", str(WORK / target)])
 
 
-def start_studio() -> subprocess.Popen | None:
+studio: subprocess.Popen | None = None
+
+
+def ensure_studio() -> None:
+    """Start Studio once the workspace has a .wire/ folder (Studio exits
+    without one), then wait until it answers so the browser can connect."""
+    global studio
+    if studio and studio.poll() is None:
+        return
     script = studio_script()
-    if not script.exists():
-        return None
-    return subprocess.Popen(["python3", str(script), "--repo", str(WORK), "--port", str(STUDIO_PORT), "--no-browser"],
-                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True)
+    if not script.exists() or not (WORK / ".wire").is_dir():
+        return
+    studio = subprocess.Popen(["python3", str(script), "--repo", str(WORK), "--port", str(STUDIO_PORT), "--no-browser"],
+                              stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True)
+    deadline = time.time() + 10
+    while time.time() < deadline and studio.poll() is None:
+        try:
+            socket.create_connection(("127.0.0.1", STUDIO_PORT), timeout=0.5).close()
+            return
+        except OSError:
+            time.sleep(0.2)
+
+
+def stop_studio() -> None:
+    if studio and studio.poll() is None:
+        try:
+            os.killpg(studio.pid, signal.SIGTERM)
+        except OSError:
+            studio.terminate()
 
 
 def play(auto: bool, start: int, speed: float, show_times: bool) -> None:
     restore(start - 1)
-    studio = start_studio()
+    ensure_studio()
     try:
         console.clear()
         console.print(Text(" ✻ Claude Code  ·  Wire 4.1  ·  ~/claybrook-media-group ", style="bold on grey15"))
@@ -373,6 +398,7 @@ def play(auto: bool, start: int, speed: float, show_times: bool) -> None:
             console.print()
             if step.get("kind") == "studio":
                 restore(i)
+                ensure_studio()
                 console.print(Text(f"  Wire Studio is running for this repository at {STUDIO_URL} (stop it with /wire-studio stop).", style="dim"))
             else:
                 turn = json.loads(replay_path(i).read_text())
@@ -391,11 +417,7 @@ def play(auto: bool, start: int, speed: float, show_times: bool) -> None:
     except KeyboardInterrupt:
         pass
     finally:
-        if studio:
-            try:
-                os.killpg(studio.pid, signal.SIGTERM)
-            except OSError:
-                studio.terminate()
+        stop_studio()
 
 
 # ── main ─────────────────────────────────────────────────────────────────────
