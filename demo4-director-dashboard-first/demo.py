@@ -48,16 +48,24 @@ MCP_EMPTY = HERE.parent / "shared" / "mcp-empty.json"
 STUDIO_PORT = int(os.environ.get("DEMO_STUDIO_PORT", "4800"))
 STUDIO_URL = f"http://127.0.0.1:{STUDIO_PORT}/"
 
-# rich's default Markdown colours (cyan or blue code and links on black) are
-# hard to read on a projected dark terminal.
+# rich's default Markdown colours (cyan code on a black box, blue links) are
+# hard to read on a light terminal. Use the terminal's own text colour, so the
+# replay reads on light and dark themes alike.
 console = Console(highlight=False, theme=Theme({
-    "markdown.code": "bold yellow",
-    "markdown.link": "bold bright_white",
-    "markdown.link_url": "underline bright_white",
-    "markdown.h1": "bold bright_white",
-    "markdown.h2": "bold bright_white underline",
-    "markdown.h3": "bold bright_white",
-    "markdown.block_quote": "bright_white",
+    "markdown.code": "bold",
+    "markdown.code_block": "none",
+    "markdown.link": "bold underline",
+    "markdown.link_url": "underline",
+    "markdown.h1": "bold",
+    "markdown.h2": "bold underline",
+    "markdown.h3": "bold",
+    "markdown.h4": "italic",
+    "markdown.block_quote": "italic",
+    "markdown.list": "none",
+    "markdown.item.number": "none",
+    "markdown.table.border": "dim",
+    "markdown.table.header": "bold",
+    "markdown.kbd": "bold",
 }))
 
 
@@ -395,7 +403,7 @@ def play(auto: bool, start: int, speed: float, show_times: bool) -> None:
     ensure_studio()
     try:
         console.clear()
-        console.print(Text(" ✻ Claude Code  ·  Wire 4.1  ·  ~/claybrook-media-group ", style="bold on grey15"))
+        console.print(Text(" ✻ Claude Code  ·  Wire 4.1  ·  ~/claybrook-media-group ", style="bold reverse"))
         console.print()
         for i in range(start, len(STEPS)):
             step = STEPS[i]
