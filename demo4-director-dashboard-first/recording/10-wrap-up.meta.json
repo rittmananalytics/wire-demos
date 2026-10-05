@@ -1,0 +1,17 @@
+{
+  "id": "wrap-up",
+  "say": "Where are we, and what's next?",
+  "session_id": "849ecc0b-5400-4219-9391-55e1dfcc6a57",
+  "result": {
+    "subtype": "success",
+    "is_error": false,
+    "duration_ms": 10465,
+    "total_cost_usd": 20.32271105,
+    "num_turns": 1
+  },
+  "duration_s": 12,
+  "opens": [
+    "studio"
+  ],
+  "git_head": "8521e9c"
+}

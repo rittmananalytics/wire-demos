@@ -1,0 +1,186 @@
+version: 2
+
+models:
+  - name: campaign_dim
+    description: >
+      Campaign dimension. One row per campaign. Built from the campaign
+      seed. publication is carried as an independent attribute here and on
+      content_dim; there is no shared publication dimension in Phase 1.
+    columns:
+      - name: campaign_pk
+        description: Surrogate key, md5 of campaign_id. Primary key.
+        tests:
+          - unique
+          - not_null
+      - name: campaign_id
+        description: Natural key from the source campaign record.
+      - name: campaign
+        description: Campaign name.
+      - name: advertiser
+        description: Advertiser the campaign runs for.
+      - name: agency
+        description: Booking agency. May be null for direct bookings.
+      - name: campaign_status
+        description: >
+          Delivery status of the campaign. One of Active, Paused,
+          Completed, Pending.
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['Active', 'Paused', 'Completed', 'Pending']
+      - name: publication
+        description: Publication the campaign ran against.
+      - name: booked_impression_goal
+        description: Contracted impression volume for the campaign.
+      - name: rate_card_cpm_gbp
+        description: Rate-card cost per thousand impressions, in GBP.
+      - name: booking_start_date
+        description: First day of the booking window.
+      - name: booking_end_date
+        description: Last day of the booking window.
+      - name: dbt_updated_at
+        description: Timestamp the row was last built by dbt.
+
+  - name: content_dim
+    description: >
+      Content dimension. One row per article. Built from the article
+      seed. Page is the grain of engagement; article-level reporting
+      rolls the page-grain fact up to the article.
+    columns:
+      - name: content_pk
+        description: Surrogate key, md5 of article_id. Primary key.
+        tests:
+          - unique
+          - not_null
+      - name: article_id
+        description: Natural key from the source article record.
+      - name: article
+        description: Article title.
+      - name: publication
+        description: Publication the article belongs to.
+      - name: section
+        description: Content section the article sits in.
+      - name: author
+        description: Article author. May be null.
+      - name: publish_date
+        description: Date the article was published.
+      - name: dbt_updated_at
+        description: Timestamp the row was last built by dbt.
+
+  - name: date_dim
+    description: >
+      Date dimension. One row per calendar day over the seed date range.
+      Generated from a date spine, not a seed. week_start_date backs the
+      week-grain campaign trend charts.
+    columns:
+      - name: date_day
+        description: Calendar day. Primary key, and the join key for facts.
+        tests:
+          - unique
+          - not_null
+      - name: day_of_week
+        description: Full weekday name, for example Monday.
+      - name: day_of_week_number
+        description: ISO weekday number, 1 for Monday through 7 for Sunday.
+      - name: week_start_date
+        description: Monday of the week the day falls in.
+      - name: iso_week
+        description: ISO week number of the year.
+      - name: month
+        description: Month number, 1 through 12.
+      - name: month_name
+        description: Full month name, for example September.
+      - name: quarter
+        description: Calendar quarter, 1 through 4.
+      - name: year
+        description: Calendar year.
+      - name: dbt_updated_at
+        description: Timestamp the row was last built by dbt.
+
+  - name: campaign_performance_fct
+    description: >
+      Campaign delivery fact. One row per campaign per day. Stores
+      measure components only. fill_rate_pct and cpm_gbp are
+      semantic-layer calculated measures, not stored here.
+    columns:
+      - name: campaign_performance_pk
+        description: >
+          Surrogate key, md5 of campaign_id and activity date.
+          Primary key.
+        tests:
+          - unique
+          - not_null
+      - name: campaign_fk
+        description: Foreign key to campaign_dim.campaign_pk.
+        tests:
+          - relationships:
+              arguments:
+                to: ref('campaign_dim')
+                field: campaign_pk
+      - name: date_day
+        description: Delivery date. Foreign key to date_dim.date_day.
+        tests:
+          - relationships:
+              arguments:
+                to: ref('date_dim')
+                field: date_day
+      - name: impressions_delivered
+        description: Impressions served on the day.
+        tests:
+          - not_null
+      - name: impressions_eligible
+        description: >
+          Impressions eligible to serve on the day. The denominator for
+          fill rate.
+        tests:
+          - not_null
+      - name: revenue_gbp
+        description: Revenue delivered on the day, in GBP.
+      - name: dbt_updated_at
+        description: Timestamp the row was last built by dbt.
+
+  - name: page_engagement_fct
+    description: >
+      Page engagement fact. One row per article page per day. Stores
+      total_time_on_page_seconds and page_views so the average time on
+      page is a weighted ratio in the semantic layer. unique_readers is
+      a daily per-page count and is an upper bound if summed.
+    columns:
+      - name: page_engagement_pk
+        description: >
+          Surrogate key, md5 of article_id and activity date.
+          Primary key.
+        tests:
+          - unique
+          - not_null
+      - name: content_fk
+        description: Foreign key to content_dim.content_pk.
+        tests:
+          - relationships:
+              arguments:
+                to: ref('content_dim')
+                field: content_pk
+      - name: date_day
+        description: Engagement date. Foreign key to date_dim.date_day.
+        tests:
+          - relationships:
+              arguments:
+                to: ref('date_dim')
+                field: date_day
+      - name: page_views
+        description: Page views on the day. Denominator for average time.
+        tests:
+          - not_null
+      - name: sessions
+        description: Sessions on the day.
+      - name: unique_readers
+        description: >
+          Daily per-page unique reader count. Summing across days or
+          pages gives a daily-unique upper bound, not true distinct
+          readers.
+      - name: total_time_on_page_seconds
+        description: >
+          Total time on page for the day, in seconds. Numerator for
+          average time on page.
+      - name: dbt_updated_at
+        description: Timestamp the row was last built by dbt.

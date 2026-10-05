@@ -1,0 +1,15 @@
+{
+  "id": "data-model-approved",
+  "say": "Priya accepts all four defaults, including the upper-bound label for unique readers. The data model is approved. Go ahead with the seed data, then stop for my review.",
+  "session_id": "849ecc0b-5400-4219-9391-55e1dfcc6a57",
+  "result": {
+    "subtype": "success",
+    "is_error": false,
+    "duration_ms": 32281,
+    "total_cost_usd": 16.0629332,
+    "num_turns": 4
+  },
+  "duration_s": 591,
+  "opens": [],
+  "git_head": "8521e9c"
+}

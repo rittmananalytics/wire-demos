@@ -1,0 +1,52 @@
+version: 2
+
+models:
+  - name: stg_campaign_performance
+    description: >
+      Staging view over the campaign_performance seed. One row per
+      campaign per day. Renames and types the columns and adds the
+      surrogate primary key and the campaign foreign key. Tests sit on
+      the consumed warehouse models.
+    columns:
+      - name: campaign_performance_pk
+        description: Surrogate key, md5 of campaign_id and activity_date.
+      - name: campaign_fk
+        description: >
+          Surrogate key, md5 of campaign_id. Joins to
+          campaign_dim.campaign_pk.
+      - name: campaign_id
+        description: Natural key, references the campaign seed.
+      - name: impressions_delivered
+        description: Impressions served on the day.
+      - name: impressions_eligible
+        description: Impressions eligible to serve on the day.
+      - name: revenue_gbp
+        description: Revenue delivered on the day, in GBP.
+      - name: activity_date
+        description: Delivery date.
+
+  - name: stg_page_engagement
+    description: >
+      Staging view over the page_engagement seed. One row per article
+      page per day. Renames and types the columns and adds the surrogate
+      primary key and the content foreign key. Tests sit on the consumed
+      warehouse models.
+    columns:
+      - name: page_engagement_pk
+        description: Surrogate key, md5 of article_id and activity_date.
+      - name: content_fk
+        description: >
+          Surrogate key, md5 of article_id. Joins to
+          content_dim.content_pk.
+      - name: article_id
+        description: Natural key, references the article seed.
+      - name: page_views
+        description: Page views on the day.
+      - name: sessions
+        description: Sessions on the day.
+      - name: unique_readers
+        description: Daily per-page unique reader count.
+      - name: total_time_on_page_seconds
+        description: Total time on page for the day, in seconds.
+      - name: activity_date
+        description: Engagement date.

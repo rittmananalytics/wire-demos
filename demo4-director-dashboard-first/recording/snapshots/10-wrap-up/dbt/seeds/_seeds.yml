@@ -1,0 +1,72 @@
+version: 2
+
+seeds:
+  - name: campaign
+    description: Campaign master. One row per campaign.
+    columns:
+      - name: campaign_id
+        description: Natural key.
+      - name: campaign
+        description: Campaign name.
+      - name: advertiser
+        description: Advertiser the campaign runs for.
+      - name: agency
+        description: Booking agency. May be null.
+      - name: campaign_status
+        description: One of Active, Paused, Completed, Pending.
+      - name: publication
+        description: Publication the campaign ran against.
+      - name: booking_start_date
+        description: First day of the booking window.
+      - name: booking_end_date
+        description: Last day of the booking window.
+      - name: booked_impression_goal
+        description: Contracted impression volume.
+      - name: rate_card_cpm_gbp
+        description: Rate-card cost per thousand impressions, in GBP.
+
+  - name: campaign_performance
+    description: Daily campaign delivery. One row per campaign per day.
+    columns:
+      - name: campaign_id
+        description: References campaign.campaign_id.
+      - name: date
+        description: Delivery date.
+      - name: impressions_delivered
+        description: Impressions served on the day.
+      - name: impressions_eligible
+        description: Impressions eligible to serve on the day.
+      - name: revenue_gbp
+        description: Revenue delivered on the day, in GBP.
+
+  - name: article
+    description: Article master. One row per article.
+    columns:
+      - name: article_id
+        description: Natural key.
+      - name: article
+        description: Article title.
+      - name: publication
+        description: Publication the article belongs to.
+      - name: section
+        description: Content section.
+      - name: author
+        description: Article author. May be null.
+      - name: publish_date
+        description: Date the article was published.
+
+  - name: page_engagement
+    description: Daily page engagement. One row per article page per day.
+    columns:
+      - name: article_id
+        description: References article.article_id.
+      - name: date
+        description: Engagement date.
+      - name: page_views
+        description: Page views on the day.
+      - name: sessions
+        description: Sessions on the day.
+      - name: unique_readers
+        description: Daily per-page unique reader count.
+      - name: total_time_on_page_seconds
+        description: Total time on page for the day, in seconds.

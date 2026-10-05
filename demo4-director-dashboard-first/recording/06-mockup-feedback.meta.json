@@ -1,0 +1,18 @@
+{
+  "id": "mockup-feedback",
+  "say": "Priya's feedback on round 1: show average CPM as a weekly trend line instead of a bar chart, and move the detail table to the bottom of the page. Everything else stays: keep the two extra headline figures, the filters (no agency filter on Audience Engagement), one page per dashboard and your formulas for CPM and fill rate. She approves the conceptual model as it is, with pages kept as part of each article. Please do round 2.",
+  "session_id": "849ecc0b-5400-4219-9391-55e1dfcc6a57",
+  "result": {
+    "subtype": "success",
+    "is_error": false,
+    "duration_ms": 15613,
+    "total_cost_usd": 9.0756737,
+    "num_turns": 2
+  },
+  "duration_s": 291,
+  "opens": [
+    ".wire/releases/01-campaign-dashboards/design/mockups/audience-engagement.html",
+    ".wire/releases/01-campaign-dashboards/design/mockups/campaign-performance.html"
+  ],
+  "git_head": "8521e9c"
+}
