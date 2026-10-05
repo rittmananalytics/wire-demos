@@ -37,6 +37,7 @@ from rich.markdown import Markdown
 from rich.padding import Padding
 from rich.spinner import Spinner
 from rich.text import Text
+from rich.theme import Theme
 
 HERE = Path(__file__).resolve().parent
 WORK = Path(os.environ.get("DEMO_WORKSPACE", HERE / "workspace"))
@@ -47,7 +48,17 @@ MCP_EMPTY = HERE.parent / "shared" / "mcp-empty.json"
 STUDIO_PORT = int(os.environ.get("DEMO_STUDIO_PORT", "4800"))
 STUDIO_URL = f"http://127.0.0.1:{STUDIO_PORT}/"
 
-console = Console(highlight=False)
+# rich's default Markdown colours (cyan or blue code and links on black) are
+# hard to read on a projected dark terminal.
+console = Console(highlight=False, theme=Theme({
+    "markdown.code": "bold yellow",
+    "markdown.link": "bold bright_white",
+    "markdown.link_url": "underline bright_white",
+    "markdown.h1": "bold bright_white",
+    "markdown.h2": "bold bright_white underline",
+    "markdown.h3": "bold bright_white",
+    "markdown.block_quote": "bright_white",
+}))
 
 
 # ── steps and recording files ────────────────────────────────────────────────
