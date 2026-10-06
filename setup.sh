@@ -48,12 +48,17 @@ if pip install --quiet -r "$SCRIPT_DIR/requirements.txt"; then
   ok "Python dependencies installed"
 else
   err "pip install failed — see output above"
+  if [ "$(uname -s)" = "Darwin" ] && ! python -c "import ssl, urllib.request; urllib.request.urlopen('https://pypi.org', timeout=10)" >/dev/null 2>&1; then
+    warn "This Python cannot verify HTTPS certificates. If it came from python.org, run"
+    warn "  /Applications/Python\ 3.*/Install\ Certificates.command"
+    warn "then re-run ./setup.sh"
+  fi
   FAIL=$((FAIL+1))
 fi
 
-# Verify dbt-duckdb
-if dbt --version >/dev/null 2>&1; then
-  DBT_V=$(dbt --version 2>&1 | grep -m1 -i 'core' || true)
+# Verify dbt-duckdb (the venv's own dbt, not another dbt on PATH)
+if "$VENV_DIR/bin/dbt" --version >/dev/null 2>&1; then
+  DBT_V=$("$VENV_DIR/bin/dbt" --version 2>&1 | grep -m1 -i 'installed' || true)
   ok "dbt installed in venv  ${DBT_V}"
 else
   err "dbt not callable from venv after install"

@@ -1,8 +1,11 @@
 # Python dependencies for the Wire demos.
 # Installed into a local .venv/ by setup.sh.
 
-# Local warehouse engine for the demos
-dbt-duckdb>=1.8,<2.0
+# Local warehouse engine for the demos. Pinned to the versions the recordings
+# were made with. dbt-core 1.12 adds a parser package that downloads a wheel
+# from GitHub at install time, which fails on Pythons without CA certificates.
+dbt-core>=1.11,<1.12
+dbt-duckdb>=1.10,<1.11
 
 # Used by shared/client/sources/generate.py to produce deterministic seed data
 # (Faker for realistic names/emails, pandas for CSV writing)
