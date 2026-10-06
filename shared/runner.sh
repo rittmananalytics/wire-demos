@@ -82,13 +82,18 @@ demo_log_dir() {
 # run_wire <wire command + args> — execute a /wire:* command via claude -p
 # Logs stdout+stderr to logs/wire-<timestamp>-<safe-name>.log
 # Returns claude's exit code; on non-zero, prints the last 50 log lines.
+# __screen say|reply <arg> — see shared/playback/screen.py.
+__screen() {
+  local py="$WIRE_DEMOS_ROOT/.venv/bin/python"
+  [ -x "$py" ] || py=python3
+  "$py" "$WIRE_DEMOS_ROOT/shared/playback/screen.py" "$@"
+}
+
 run_wire() {
   local prompt="$*"
   local safe_name
   safe_name=$(echo "$prompt" | tr -c '[:alnum:]' '-' | cut -c1-50)
   local log="${DEMO_LOG_DIR:-/tmp}/wire-$(date +%s)-${safe_name}.log"
-
-  show_command "claude -p \"$prompt\""
 
   # Append auto-approve text for -review commands
   if [[ "$prompt" == *-review* ]]; then
@@ -96,6 +101,9 @@ run_wire() {
 
 Approved by demo operator — no changes requested."
   fi
+
+  # Show the message as typed into Claude Code, as the director demo does.
+  [ "${DEMO_MODE:-interactive}" != "silent" ] && __screen say "$prompt"
 
   # Default text output (stream-json requires --verbose; not worth the noise for demos).
   # --strict-mcp-config + empty mcp-config keeps user-level MCP server tool
@@ -105,18 +113,21 @@ Approved by demo operator — no changes requested."
   # dbt commands are pre-approved so validate and review can run the tests
   # unattended; every other command still needs approval and is refused.
   # Reading the plugin folder is allowed so Wire can open its own guidance.
+  # Recording runs unattended in a demo folder rebuilt from _seeds/ each run,
+  # so it skips permission prompts (approved by the repo owner); a refused
+  # step would spoil the take. Live runs keep acceptEdits.
+  local mode=acceptEdits
+  [ "${DEMO_PLAYBACK:-}" = "record" ] && mode=bypassPermissions
   if claude -p "$prompt" \
       "${__CLAUDE_MODEL_FLAG[@]}" \
-      --permission-mode acceptEdits \
+      --permission-mode "$mode" \
       --allowedTools "Bash(dbt:*)" "Read(~/.claude/plugins/**)" \
       --strict-mcp-config \
       --mcp-config "$WIRE_DEMOS_ROOT/shared/mcp-empty.json" \
       >"$log" 2>&1; then
-    ok "claude completed   (log: $(basename "$log"))"
-    # Show a short tail of the actual claude output to give the viewer something to read
+    # Claude's full reply, formatted as Markdown.
     if [ "${DEMO_MODE:-interactive}" != "silent" ]; then
-      echo ""
-      tail -n 20 "$log" 2>/dev/null | sed 's/^/   │ /'
+      __screen reply "$log"
       echo ""
     fi
     return 0

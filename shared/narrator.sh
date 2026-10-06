@@ -78,7 +78,7 @@ show_file() {
   elif [[ "$f" == *.md ]] && command -v glow >/dev/null 2>&1; then
     glow -s dark "$f" </dev/null 2>/dev/null || cat "$f"
   elif command -v bat >/dev/null 2>&1; then
-    bat --plain --color=always "$f" 2>/dev/null || cat "$f"
+    bat --plain --paging=never --color=always "$f" 2>/dev/null || cat "$f"
   else
     cat "$f"
   fi

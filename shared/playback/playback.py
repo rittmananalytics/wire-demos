@@ -127,7 +127,16 @@ def record(tool: str, argv: list[str], demo: Path, rec: Path, cid: str) -> int:
     return rc
 
 
-def wait(tool: str, duration: int) -> None:
+def label_for(tool: str, args: list[str]) -> str:
+    """What the spinner names: the Wire command, as Claude Code shows it."""
+    if tool == "dbt":
+        return "dbt " + " ".join(a for a in args[:1])
+    prompt = call_key(tool, args)[0] if args else ""
+    first = prompt.split()[0].rstrip(".") if prompt.split() else ""
+    return first if first.startswith("/wire:") else "Working"
+
+
+def wait(tool: str, duration: int, label: str) -> None:
     """Hold for a short, scaled version of the recorded time, with a spinner on
     the terminal (the caller usually sends stdout and stderr to a log)."""
     speed = float(os.environ.get("DEMO_REPLAY_SPEED", "1"))
@@ -138,16 +147,16 @@ def wait(tool: str, duration: int) -> None:
         time.sleep(seconds)
         return
     frames = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏"
-    label = f"{tool} working (took {duration // 60}m {duration % 60:02d}s in the recorded run)"
+    took = f"({duration // 60}m {duration % 60:02d}s in the recorded run)"
     end = time.time() + seconds
     n = 0
     with tty:
         while time.time() < end:
-            tty.write(f"\r  {frames[n % len(frames)]} {label}")
+            tty.write(f"\r  {frames[n % len(frames)]} \033[2m{label} {took}\033[0m")
             tty.flush()
             n += 1
             time.sleep(0.08)
-        tty.write("\r\033[K")
+        tty.write(f"\r\033[K  \033[2m⏺ {label}\033[0m\n\n")
         tty.flush()
 
 
@@ -158,7 +167,7 @@ def replay(tool: str, demo: Path, rec: Path, cid: str) -> int:
               f"Record the demo again, or run it live with DEMO_PLAYBACK=live.", file=sys.stderr)
         return 1
     saved = json.loads(call.read_text())
-    wait(tool, saved["duration_s"])
+    wait(tool, saved["duration_s"], label_for(tool, saved["args"]))
     snap = rec / "snapshots" / f"{cid}.tar.gz"
     if snap.exists():
         restore(demo, snap)
