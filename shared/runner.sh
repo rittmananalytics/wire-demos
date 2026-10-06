@@ -104,10 +104,11 @@ Approved by demo operator — no changes requested."
   # itself is a plugin, not an MCP server, so it still loads.
   # dbt commands are pre-approved so validate and review can run the tests
   # unattended; every other command still needs approval and is refused.
+  # Reading the plugin folder is allowed so Wire can open its own guidance.
   if claude -p "$prompt" \
       "${__CLAUDE_MODEL_FLAG[@]}" \
       --permission-mode acceptEdits \
-      --allowedTools "Bash(dbt:*)" \
+      --allowedTools "Bash(dbt:*)" "Read(~/.claude/plugins/**)" \
       --strict-mcp-config \
       --mcp-config "$WIRE_DEMOS_ROOT/shared/mcp-empty.json" \
       >"$log" 2>&1; then

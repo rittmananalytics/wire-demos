@@ -10,9 +10,9 @@ runner.sh puts shared/playback/bin first on PATH when DEMO_PLAYBACK is
   replay  wait a few seconds, restore the saved files, print the saved output
           and exit with the saved code
 
-A call's id is the tool, a hash of its arguments (with the repo path and the
-model choice taken out, so a recording works from any checkout and model) and
-how many times the same call has run before in this demo run.
+A call's id is the tool, a hash of its prompt (claude) or arguments (dbt),
+with the repo path taken out so a recording works from any checkout, and how
+many times the same call has run before in this demo run.
 """
 
 from __future__ import annotations
@@ -47,8 +47,16 @@ def call_args(argv: list[str]) -> list[str]:
     return out
 
 
+def call_key(tool: str, args: list[str]) -> list[str]:
+    """What identifies a call: for claude only the prompt, so a recording made
+    with one model or set of options replays under any other."""
+    if tool == "claude" and "-p" in args and args.index("-p") + 1 < len(args):
+        return [args[args.index("-p") + 1]]
+    return args
+
+
 def call_id(tool: str, args: list[str], demo: Path) -> str:
-    digest = hashlib.sha1(json.dumps([tool, args]).encode()).hexdigest()[:10]
+    digest = hashlib.sha1(json.dumps([tool, call_key(tool, args)]).encode()).hexdigest()[:10]
     counts_file = demo / "logs" / ".playback-counts.json"
     counts_file.parent.mkdir(parents=True, exist_ok=True)
     counts = json.loads(counts_file.read_text()) if counts_file.exists() else {}
@@ -99,7 +107,8 @@ def record(tool: str, argv: list[str], demo: Path, rec: Path, cid: str) -> int:
     path = os.pathsep.join(p for p in os.environ.get("PATH", "").split(os.pathsep)
                            if p and Path(p).resolve() != Path(shims))
     env = {**os.environ, "PATH": path}
-    proc = subprocess.Popen([real, *argv], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, env=env)
+    proc = subprocess.Popen([real, *argv], stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE, text=True, env=env)
     out: list[str] = []
     err: list[str] = []
     threads = [threading.Thread(target=tee, args=(proc.stdout, sys.stdout, out)),
