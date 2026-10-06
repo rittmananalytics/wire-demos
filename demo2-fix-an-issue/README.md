@@ -4,7 +4,7 @@ Picks up an in-flight engagement where one warehouse model has a Wire convention
 
 **Release type**: `dbt_development`
 **Time**: ~5 minutes
-**Output**: a fixed dbt model, a passing `dbt-validate`, and a green `dbt build`.
+**Output**: a fixed `schema.yml`, a passing `dbt-validate`, and a green `dbt build`.
 
 ## Run it
 
@@ -12,18 +12,12 @@ Picks up an in-flight engagement where one warehouse model has a Wire convention
 make demo2
 ```
 
-## Planted fault (default — Fault A)
+## Planted fault
 
-`models/warehouse/fct_orders.sql` uses `customer_id` as the foreign key column where Wire's dbt-development convention requires `customer_fk`. `wire:dbt-validate` catches this in its naming check.
+In `dbt/models/schema.yml`, the order fact `wh_core__order_fact` has no entry for its foreign key `customer_fk`: no description and no `relationships` test against `wh_core__customer_dim.customer_pk`. Wire's dbt-development rules require both, so `/wire:dbt-validate` fails. The rest of the project meets Wire's rules, so after the fix the check passes.
 
-## Fault library
+The starting state lives in `_seeds/demo2-fix-an-issue/` at the repository root. `make reset-demo2` restores it.
 
-The repo can re-run with other planted faults by swapping `_seed/dbt/` for one of the variants:
+## Recording
 
-| ID | Fault | Caught by |
-|---|---|---|
-| A (default) | `customer_id` instead of `customer_fk` in `fct_orders.sql` | `dbt-validate` naming check |
-| B | Missing `not_null` test on PK in `dim_customer.yml` | `dbt-validate` testing-coverage check |
-| C | `int_orders.sql` references a non-existent column | `dbt-validate` compilation step |
-
-To switch fault: `cp _seed/faults/B/* _seed/dbt/` (etc.) then `make reset-demo2`.
+`make demo2` replays the recorded run in `recording/` when one exists. `make record-demo2` runs the demo live (with Opus by default) and saves a new recording. `DEMO_PLAYBACK=live make demo2` runs it live without saving.

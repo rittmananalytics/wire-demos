@@ -1,0 +1,18 @@
+{
+  "tool": "claude",
+  "args": [
+    "-p",
+    "/wire:status releases/01-marketing-mart",
+    "--permission-mode",
+    "acceptEdits",
+    "--allowedTools",
+    "Bash(dbt:*)",
+    "--strict-mcp-config",
+    "--mcp-config",
+    "<root>/shared/mcp-empty.json"
+  ],
+  "rc": 0,
+  "duration_s": 26,
+  "stdout": "The `dbt` step in release 01-marketing-mart failed its check on 2026-04-29, and the cause is still in place. The release cannot move to review until that is fixed.\n\n# 01-marketing-mart: Status\n\n**Client:** Acme Coffee Roasters (engagement: marketing_mart_extension)\n**Release type:** dbt_development | **Phase:** dbt_validate\n\n| Artifact     | Generate    | Validate  | Review      | Ready |\n|--------------|-------------|-----------|-------------|-------|\n| requirements | ✅ complete | ✅ pass    | ✅ approved  | ✅     |\n| data_model   | ✅ complete | ✅ pass    | ✅ approved  | ✅     |\n| dbt          | ✅ complete | ❌ failing | ⏳ blocked   | ⬜     |\n\n### Highlights\n\n- **Blocker:** In `dbt/models/schema.yml` (the file that describes and tests each model), the `customer_fk` column on `wh_core__order_fact` has no description and no relationships test. That test checks that every order points to a real row in `wh_core__customer_dim.customer_pk`. I checked the file today: the column is still missing for that model. The staging and integration order models already have it (lines 37 and 107), so the same pattern can be copied.\n- **Next:** Add the column entry to `schema.yml`, then run `/wire:dbt-validate 01-marketing-mart`. Run `/wire:dbt-review 01-marketing-mart` once it passes.\n- **dbt:** 8 files generated (6 models, plus `schema.yml` and `field_descriptions.md`). `dbt build` runs without errors. Only this check fails.\n- **Approvals:** Becky Hartmann approved the requirements on 2026-04-17. Steph Owens approved the data model on 2026-04-22.\n\nTwo notes on `status.md`:\n- It records \"failing\" and \"blocked\", which are not standard Wire values. The standard values are \"fail\" and \"pending\".\n- The artifact states are written in a block in the body of the file, not in the header section where Wire usually reads them.\n\nNeither affects this report. Running `/wire:status-sync 01-marketing-mart` would put both in the standard form.\n",
+  "stderr": ""
+}

@@ -1,0 +1,18 @@
+{
+  "tool": "claude",
+  "args": [
+    "-p",
+    "/wire:dbt-validate releases/01-marketing-mart",
+    "--permission-mode",
+    "acceptEdits",
+    "--allowedTools",
+    "Bash(dbt:*)",
+    "--strict-mcp-config",
+    "--mcp-config",
+    "<root>/shared/mcp-empty.json"
+  ],
+  "rc": 0,
+  "duration_s": 85,
+  "stdout": "The dbt check for `01-marketing-mart` now **passes**. All 25 tests pass, and the earlier failure is fixed: `wh_core__order_fact.customer_fk` is now documented and tested in `dbt/models/schema.yml`.\n\n## Test results\n\n`dbt build` ran on the bundled DuckDB warehouse (the local database file). All 33 steps succeeded: 2 seeds, 6 models and 25 tests.\n\n| Layer | Tests passed |\n|---|---|\n| Staging | 7 / 7 |\n| Integration | 9 / 9 |\n| Warehouse | 9 / 9 |\n\nThere were 23 tests last time. The 2 new ones are a \"not empty\" check and a \"matches a customer\" check on `customer_fk`.\n\n## Convention checks\n\nThere are no project-specific rules files, so the standard Wire rules applied.\n\n| Area | Result |\n|---|---|\n| File names and folders | Pass. Names are singular and use the `stg_`, `int_`, `wh_..._dim` and `wh_..._fact` patterns. |\n| Column names | Pass. Keys end in `_pk`, `_fk` or `_natural_key`, and timestamps in `_ts`. True/false columns start with `has_`, money columns end in `_amount`, and keys use `generate_surrogate_key`. |\n| Column order | Pass in all 6 models. |\n| SQL layout | Pass. Each model reads its inputs in `s_` blocks at the top and ends with `select * from final`. Joins are `left join`, with no single-letter table names. |\n| Table vs view | Pass. Warehouse models build as tables; staging and integration as views. |\n| Tests | Pass. Every primary key has both tests and every foreign key has a \"matches\" test. |\n| Descriptions | Pass. Every staging and warehouse model and column has one, through shared description blocks in `field_descriptions.md`. |\n| Links between models | Pass. All references resolve and run staging, then integration, then warehouse. |\n\n## Remaining issues (none blocking)\n\n| Level | Issue | Suggested change |\n|---|---|---|\n| Important | All 6 models are described in one `models/schema.yml`. The rules expect one file per folder. | Split it into `stg_shopify.yml`, `integration.yml` and `wh_core.yml`. |\n| Info | Staging models read the seed files with `ref()` instead of `source()`. | None. The code comments say this is on purpose for the demo. |\n| Info | sqlfluff (an automatic SQL style checker) is not installed, so I checked the style by eye. | Install sqlfluff for automated checks. |\n\n## What I changed\n\n- **Release status file** (`status.md`): set `validate: pass`, `review: not_started` and `tests_passed: 25`, set the current phase to `dbt_review`, and added a session history row.\n- **Execution log** (`execution_log.md`): added a `pass` row.\n- **Jira:** I did not sync anything; this release has no Jira set up.\n\nThe shared demo runner, which normally tells dbt how to connect, is outside the folders this session can open. So I wrote a short connection file in `dbt/.tmp_profile/`, used it for the build, and deleted it afterwards.\n\n**Next step:** `/wire:dbt-review releases/01-marketing-mart`.\n",
+  "stderr": ""
+}

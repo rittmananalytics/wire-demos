@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Stand-in for `dbt` while a demo records or replays. See ../playback.py.
+exec python3 "$(dirname "${BASH_SOURCE[0]}")/../playback.py" dbt "$@"

@@ -14,7 +14,7 @@ skill's battery of checks across the project — naming conventions,
 testing coverage, documentation, model configuration — and produces a
 severity-rated report.
 
-Per status.md the validate is failing on the warehouse schema.yml.
+Per status.md the validate is failing on models/schema.yml.
 Wire will say more — read the output carefully.
 EOF
 pause

@@ -13,10 +13,10 @@ source "$REPO_ROOT/shared/auto_approve.sh"
 section "Wire Framework — Demo 2: Fix an issue"
 narrate_long <<'EOF'
 This demo picks up an in-flight engagement (same Acme client, dbt-only
-release) where one warehouse model has a Wire convention violation:
-fct_orders.sql uses customer_id where it should use customer_fk. The demo
-runs /wire:start, /wire:dbt-validate (which catches the issue), fixes it
-via Claude, re-validates, and re-builds.
+release) where the order fact's foreign key, customer_fk, has no
+description and no relationships test. The demo runs /wire:start,
+/wire:dbt-validate (which catches the issue), fixes it via Claude,
+re-validates, and re-builds.
 
 Estimated time: ~5 minutes.
 EOF
@@ -39,7 +39,7 @@ if [ ${#STEPS[@]} -eq 0 ]; then
    3. /wire:status — see what's failing
    4. /wire:dbt-validate — naming convention violation surfaces
    5. Narrator quotes the _fk convention from wire/skills/dbt-development/SKILL.md
-   6. claude -p — rename customer_id → customer_fk and update downstream refs
+   6. claude -p — add customer_fk, with a relationships test, to schema.yml
    7. /wire:dbt-validate — PASS
    8. dbt build — confirm runtime still works
    9. /wire:dbt-review — sign off

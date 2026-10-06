@@ -16,4 +16,5 @@ EOF
 pause
 
 cd "$WIRE_DEMOS_ROOT/demo2-fix-an-issue/dbt"
+run_dbt deps
 run_dbt build

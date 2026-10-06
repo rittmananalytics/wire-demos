@@ -1,0 +1,18 @@
+{
+  "tool": "claude",
+  "args": [
+    "-p",
+    "/wire:dbt-review releases/01-marketing-mart\n\nApproved by demo operator — no changes requested.",
+    "--permission-mode",
+    "acceptEdits",
+    "--allowedTools",
+    "Bash(dbt:*)",
+    "--strict-mcp-config",
+    "--mcp-config",
+    "<root>/shared/mcp-empty.json"
+  ],
+  "rc": 0,
+  "duration_s": 28,
+  "stdout": "The dbt code for `01-marketing-mart` is approved. The demo operator reviewed it and asked for no changes.\n\n**What I checked first:** the last validation run passed. All 25 tests and all 33 build steps passed, so the review could go ahead.\n\n**What I changed:**\n\n| File | Change |\n|------|--------|\n| `.wire/releases/01-marketing-mart/status.md` | Set dbt `review: approved`, reviewer \"Demo operator\", date 2026-10-06. Set the current phase to `dbt_approved` and added a session history row. |\n| `.wire/releases/01-marketing-mart/execution_log.md` | Added one `approved` row. Tokens and cost show `n/a` until the plugin fills them in. |\n\n**What I skipped:**\n- Meeting notes, Confluence and Jira lookups and the Jira sync. These steps are optional and no connection to those services was set up.\n- Detailed step tracing. It only runs when `WIRE_TRACE` is set to true. I could not read that setting here, so I treated it as off.\n\nThe approval record has no missing values.\n\n**Next step:** all artifacts in this release are approved: requirements, data model and dbt. You can now commit the fix and close the release.\n",
+  "stderr": ""
+}

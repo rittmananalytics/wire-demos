@@ -10,12 +10,12 @@
 
 Add a marketing-focused warehouse mart on top of the existing Acme dbt project:
 
-- New warehouse models: `fct_orders` (customer-attributed order facts), `dim_customer` (extended customer dimension).
-- Integration model: `int_orders` combining Shopify orders with Stripe payment status.
+- New warehouse models: `wh_core__order_fact` (customer-attributed order facts), `wh_core__customer_dim` (extended customer dimension).
+- Integration models: `int_core__order` (orders with customer attributes) and `int_core__customer` (customers with lifetime order totals).
 - Tests: PK uniqueness, FK referential integrity, not-null on customer attribution columns.
 
 ## Out of scope
-- New ingestion (uses existing Shopify + Stripe seeds).
+- New ingestion (uses the existing Shopify seeds).
 - BI layer changes (a follow-on release).
 
 ## Acceptance criteria

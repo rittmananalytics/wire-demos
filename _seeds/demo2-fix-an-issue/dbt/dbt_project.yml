@@ -15,9 +15,7 @@ clean-targets:
   - "target"
   - "dbt_packages"
 
-# For the demo we keep everything in one DuckDB schema (default: main).
-# In a real engagement these would be separated by layer; the demo's
-# focus is the Wire convention violation, not schema isolation.
+# All layers build into one DuckDB schema (default: main).
 models:
   acme_marketing_mart:
     staging:

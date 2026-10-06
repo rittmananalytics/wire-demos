@@ -16,11 +16,11 @@ fi
 
 FAIL=0
 
-# After Demo 2 runs, fct_orders.sql should reference customer_fk (not customer_id)
-if grep -q "customer_fk" "$SCRIPT_DIR/dbt/models/warehouse/fct_orders.sql" 2>/dev/null; then
-  ok "fct_orders.sql uses customer_fk (Fault A fixed)"
+# After Demo 2 runs, the order fact's entry in schema.yml should list customer_fk
+if sed -n '/name: wh_core__order_fact/,$p' "$SCRIPT_DIR/dbt/models/schema.yml" 2>/dev/null | grep -q "name: customer_fk"; then
+  ok "schema.yml documents and tests wh_core__order_fact.customer_fk (fault fixed)"
 else
-  err "fct_orders.sql still uses customer_id — fix didn't land"
+  err "schema.yml still has no customer_fk entry for wh_core__order_fact — fix didn't land"
   FAIL=$((FAIL+1))
 fi
 

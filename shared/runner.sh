@@ -21,12 +21,34 @@ if [ -f "$WIRE_DEMOS_ROOT/.venv/bin/activate" ] && [ -z "${VIRTUAL_ENV:-}" ]; th
   source "$WIRE_DEMOS_ROOT/.venv/bin/activate"
 fi
 
+# Playback: record or replay every `claude` and `dbt` call (see
+# shared/playback/playback.py). DEMO_PLAYBACK is `live`, `record` or `replay`;
+# when unset, a demo with a recording replays it and one without runs live.
+__playback_setup() {
+  [ -n "${DEMO_DIR:-}" ] || return 0
+  if [ -z "${DEMO_PLAYBACK:-}" ]; then
+    if [ -d "$DEMO_DIR/recording/calls" ]; then DEMO_PLAYBACK=replay; else DEMO_PLAYBACK=live; fi
+  fi
+  export DEMO_PLAYBACK
+  [ "$DEMO_PLAYBACK" = "live" ] && return 0
+  local shims="$WIRE_DEMOS_ROOT/shared/playback/bin"
+  case ":$PATH:" in *":$shims:"*) return 0 ;; esac
+  if [ -z "${REAL_CLAUDE:-}" ]; then REAL_CLAUDE="$(command -v claude || true)"; export REAL_CLAUDE; fi
+  if [ -z "${REAL_DBT:-}" ]; then REAL_DBT="$(command -v dbt || true)"; export REAL_DBT; fi
+  export PATH="$shims:$PATH"
+}
+__playback_setup
+
+# dbt finds the demo profile (acme, local DuckDB) without --profiles-dir, so
+# Wire commands that run dbt themselves can find it too.
+export DBT_PROFILES_DIR="$WIRE_DEMOS_ROOT/shared/profiles"
+
 # Model routing
 DEMO_MODEL="${DEMO_MODEL:-haiku}"
 case "$DEMO_MODEL" in
   haiku)  __CLAUDE_MODEL_FLAG=(--model claude-haiku-4-5-20251001) ;;
-  sonnet) __CLAUDE_MODEL_FLAG=(--model claude-sonnet-4-6) ;;
-  opus)   __CLAUDE_MODEL_FLAG=(--model claude-opus-4-7) ;;
+  sonnet) __CLAUDE_MODEL_FLAG=(--model claude-sonnet-5-5) ;;
+  opus)   __CLAUDE_MODEL_FLAG=(--model claude-opus-5-5) ;;
   *)      __CLAUDE_MODEL_FLAG=() ;;
 esac
 
@@ -49,7 +71,8 @@ demo_init() {
   mkdir -p "$DEMO_LOG_DIR"
 
   cd "$DEMO_DIR" || return 1
-  ok "Initialised demo: $demo_dir   (logs: $DEMO_LOG_DIR)"
+  __playback_setup
+  ok "Initialised demo: $demo_dir   (logs: $DEMO_LOG_DIR, playback: $DEMO_PLAYBACK)"
 }
 
 demo_log_dir() {
@@ -79,9 +102,12 @@ Approved by demo operator — no changes requested."
   # schemas out of the prompt (Ahrefs/Atlassian/BigQuery/etc. otherwise inject
   # tens of thousands of tokens and trip "Prompt is too long"). The Wire plugin
   # itself is a plugin, not an MCP server, so it still loads.
+  # dbt commands are pre-approved so validate and review can run the tests
+  # unattended; every other command still needs approval and is refused.
   if claude -p "$prompt" \
       "${__CLAUDE_MODEL_FLAG[@]}" \
       --permission-mode acceptEdits \
+      --allowedTools "Bash(dbt:*)" \
       --strict-mcp-config \
       --mcp-config "$WIRE_DEMOS_ROOT/shared/mcp-empty.json" \
       >"$log" 2>&1; then

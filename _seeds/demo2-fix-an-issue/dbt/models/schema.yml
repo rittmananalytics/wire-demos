@@ -1,0 +1,198 @@
+version: 2
+
+models:
+  - name: stg_shopify__customer
+    description: "Shopify customers, one row per customer, renamed and cast"
+    columns:
+      - name: customer_pk
+        description: "{{ doc('customer_pk') }}"
+        data_tests:
+          - unique
+          - not_null
+      - name: customer_natural_key
+        description: "{{ doc('customer_natural_key') }}"
+      - name: customer_email
+        description: "{{ doc('customer_email') }}"
+      - name: customer_first_name
+        description: "{{ doc('customer_first_name') }}"
+      - name: customer_last_name
+        description: "{{ doc('customer_last_name') }}"
+      - name: customer_country_code
+        description: "{{ doc('customer_country_code') }}"
+      - name: has_marketing_consent
+        description: "{{ doc('has_marketing_consent') }}"
+      - name: customer_created_ts
+        description: "{{ doc('customer_created_ts') }}"
+      - name: customer_updated_ts
+        description: "{{ doc('customer_updated_ts') }}"
+
+  - name: stg_shopify__order
+    description: "Shopify orders, one row per order, renamed and cast"
+    columns:
+      - name: order_pk
+        description: "{{ doc('order_pk') }}"
+        data_tests:
+          - unique
+          - not_null
+      - name: customer_fk
+        description: "{{ doc('customer_fk') }}"
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_shopify__customer')
+                field: customer_pk
+      - name: order_natural_key
+        description: "{{ doc('order_natural_key') }}"
+      - name: order_number
+        description: "{{ doc('order_number') }}"
+      - name: order_email
+        description: "{{ doc('order_email') }}"
+      - name: order_payment_status
+        description: "{{ doc('order_payment_status') }}"
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['paid', 'refunded']
+      - name: order_currency_code
+        description: "{{ doc('order_currency_code') }}"
+      - name: order_market
+        description: "{{ doc('order_market') }}"
+      - name: order_total_amount
+        description: "{{ doc('order_total_amount') }}"
+      - name: order_created_ts
+        description: "{{ doc('order_created_ts') }}"
+      - name: order_updated_ts
+        description: "{{ doc('order_updated_ts') }}"
+
+  - name: int_core__customer
+    description: "Customers with lifetime order count and revenue"
+    columns:
+      - name: customer_pk
+        description: "{{ doc('customer_pk') }}"
+        data_tests:
+          - unique
+          - not_null
+      - name: customer_natural_key
+        description: "{{ doc('customer_natural_key') }}"
+      - name: customer_email
+        description: "{{ doc('customer_email') }}"
+      - name: customer_first_name
+        description: "{{ doc('customer_first_name') }}"
+      - name: customer_last_name
+        description: "{{ doc('customer_last_name') }}"
+      - name: customer_country_code
+        description: "{{ doc('customer_country_code') }}"
+      - name: customer_lifetime_order_count
+        description: "{{ doc('customer_lifetime_order_count') }}"
+        data_tests:
+          - not_null
+      - name: customer_lifetime_revenue_amount
+        description: "{{ doc('customer_lifetime_revenue_amount') }}"
+        data_tests:
+          - not_null
+      - name: has_marketing_consent
+        description: "{{ doc('has_marketing_consent') }}"
+      - name: customer_created_ts
+        description: "{{ doc('customer_created_ts') }}"
+
+  - name: int_core__order
+    description: "Orders with the ordering customer country and consent"
+    columns:
+      - name: order_pk
+        description: "{{ doc('order_pk') }}"
+        data_tests:
+          - unique
+          - not_null
+      - name: customer_fk
+        description: "{{ doc('customer_fk') }}"
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('int_core__customer')
+                field: customer_pk
+      - name: order_natural_key
+        description: "{{ doc('order_natural_key') }}"
+      - name: order_number
+        description: "{{ doc('order_number') }}"
+      - name: order_payment_status
+        description: "{{ doc('order_payment_status') }}"
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['paid', 'refunded']
+      - name: order_currency_code
+        description: "{{ doc('order_currency_code') }}"
+      - name: order_market
+        description: "{{ doc('order_market') }}"
+      - name: customer_country_code
+        description: "{{ doc('customer_country_code') }}"
+      - name: order_total_amount
+        description: "{{ doc('order_total_amount') }}"
+      - name: has_customer_marketing_consent
+        description: "{{ doc('has_customer_marketing_consent') }}"
+      - name: order_created_ts
+        description: "{{ doc('order_created_ts') }}"
+
+  - name: wh_core__customer_dim
+    description: "Customer dimension, one row per customer"
+    columns:
+      - name: customer_pk
+        description: "{{ doc('customer_pk') }}"
+        data_tests:
+          - unique
+          - not_null
+      - name: customer_natural_key
+        description: "{{ doc('customer_natural_key') }}"
+      - name: customer_email
+        description: "{{ doc('customer_email') }}"
+      - name: customer_first_name
+        description: "{{ doc('customer_first_name') }}"
+      - name: customer_last_name
+        description: "{{ doc('customer_last_name') }}"
+      - name: customer_country_code
+        description: "{{ doc('customer_country_code') }}"
+      - name: customer_lifetime_order_count
+        description: "{{ doc('customer_lifetime_order_count') }}"
+        data_tests:
+          - not_null
+      - name: customer_lifetime_revenue_amount
+        description: "{{ doc('customer_lifetime_revenue_amount') }}"
+        data_tests:
+          - not_null
+      - name: has_marketing_consent
+        description: "{{ doc('has_marketing_consent') }}"
+      - name: customer_created_ts
+        description: "{{ doc('customer_created_ts') }}"
+
+  - name: wh_core__order_fact
+    description: "Order fact, one row per Shopify order"
+    columns:
+      - name: order_pk
+        description: "{{ doc('order_pk') }}"
+        data_tests:
+          - unique
+          - not_null
+      - name: order_natural_key
+        description: "{{ doc('order_natural_key') }}"
+      - name: order_number
+        description: "{{ doc('order_number') }}"
+      - name: order_payment_status
+        description: "{{ doc('order_payment_status') }}"
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['paid', 'refunded']
+      - name: order_currency_code
+        description: "{{ doc('order_currency_code') }}"
+      - name: order_market
+        description: "{{ doc('order_market') }}"
+      - name: customer_country_code
+        description: "{{ doc('customer_country_code') }}"
+      - name: order_total_amount
+        description: "{{ doc('order_total_amount') }}"
+      - name: has_customer_marketing_consent
+        description: "{{ doc('has_customer_marketing_consent') }}"
+      - name: order_created_ts
+        description: "{{ doc('order_created_ts') }}"

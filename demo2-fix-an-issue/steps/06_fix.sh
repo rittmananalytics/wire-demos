@@ -15,11 +15,11 @@ alone.
 EOF
 pause
 
-FIX_PROMPT='In dbt/models/warehouse/schema.yml, the fct_orders model only documents order_pk. Add a customer_fk column entry under fct_orders with: (a) a description noting it is the foreign key to dim_customer, (b) a not_null test, and (c) a relationships test against ref("dim_customer") on the customer_pk field. Make ONLY that addition; leave the dim_customer model entry and every other line unchanged. Remove the demo comments at the top of the file (the lines starting with "# NOTE FOR THE DEMO" and "# ↓ INCOMPLETE") since the schema is now complete.'
+FIX_PROMPT='In dbt/models/schema.yml, the wh_core__order_fact model has no entry for its customer_fk column. Add one directly after order_pk, in the same style as the other columns: (a) description "{{ doc('"'"'customer_fk'"'"') }}" (the doc block already exists in models/field_descriptions.md), (b) a not_null test, and (c) a relationships test against ref('"'"'wh_core__customer_dim'"'"') on the customer_pk field, using the same arguments: form as the other relationships tests in the file. Make ONLY that addition; leave every other line unchanged.'
 
 run_wire "$FIX_PROMPT"
 
 echo ""
 narrate "Let's see what the file looks like now:"
-show_file "$WIRE_DEMOS_ROOT/demo2-fix-an-issue/dbt/models/warehouse/schema.yml"
+show_file "$WIRE_DEMOS_ROOT/demo2-fix-an-issue/dbt/models/schema.yml"
 pause
