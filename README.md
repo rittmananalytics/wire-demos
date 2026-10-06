@@ -1,13 +1,12 @@
 # Wire Framework Demos
 
-Three self-contained demos of the [Wire Framework](https://github.com/rittmananalytics/wire-plugin). Each one runs locally against a bundled DuckDB warehouse, drives Claude Code headlessly, and narrates itself as it goes.
+Three demos of the [Wire Framework](https://github.com/rittmananalytics/wire-plugin). Each one runs locally against a bundled DuckDB warehouse, drives Claude Code headlessly, and narrates itself as it goes.
 
 | Demo | Release type | Time | What it shows |
 |---|---|---|---|
 | [Demo 1 — Full lifecycle](demo1-full-lifecycle/) | `full_platform` | ~10 min | Install → engagement setup → playbook → requirements → design → dbt → planted fault → fix → semantic layer → dashboard mockup |
 | [Demo 2 — Fix an issue](demo2-fix-an-issue/) | `dbt_development` | ~5 min | `/wire:start` on an in-flight project → `dbt-validate` catches a Wire convention violation → fix → re-validate |
-| [Demo 3 — Dashboard-first](demo3-dashboard-first/) | `dashboard_first` | ~14 min | Mockups → viz catalog → data model → seed data → dbt → semantic layer → dashboards → real-data refactor |
-| [Demo 4 — Wire Agents](demo4-wire-agents/) | `full_platform` | ~3/15 min | Auto-delegation → `/wire:delegate` fan-out plan → 3+1+2 parallel `dbt-developer` agents → `dbt build` |
+| [Demo 4 — Release director](demo4-director-dashboard-first/) | `dashboard_first` | ~20 min | A release director runs a dashboard-first release from Claude Code and follows the work in Wire Studio. Replays a recorded session. |
 
 The full design spec for these demos lives in the Wire framework repo at [`wire/docs/wire-demos-build-playbook.md`](https://github.com/rittmananalytics/wire/blob/main/wire/docs/wire-demos-build-playbook.md).
 
@@ -44,7 +43,7 @@ make doctor       # Verify everything is in place
 make demo1        # Run the full-lifecycle demo
 ```
 
-`make setup` is idempotent — re-running is safe. It's also a dependency of `make demo1/2/3`, so if you skip it you'll be prompted to run it.
+`make setup` is idempotent — re-running is safe. It's also a dependency of `make demo1/2/4`, so if you skip it you'll be prompted to run it.
 
 Each demo is fully isolated under its own folder and re-runnable. `make reset` wipes generated state and restores starting conditions.
 
@@ -74,7 +73,7 @@ wire-demos/
 ├── shared/                   # Narrator, runner, DuckDB profile, Acme client materials
 ├── demo1-full-lifecycle/     # Full platform demo
 ├── demo2-fix-an-issue/       # Existing-project fix demo
-└── demo3-dashboard-first/    # Dashboard-first demo
+└── demo4-director-dashboard-first/  # Release director demo (recorded replay)
 ```
 
 See each demo folder's README for step-by-step detail.
@@ -83,7 +82,7 @@ See each demo folder's README for step-by-step detail.
 
 ## The synthesized client — Acme Coffee Roasters
 
-All three demos run against the same fictional D2C subscription coffee business. Five source systems (Shopify, Stripe, Klaviyo, Shipstation, GA4), ~115k rows of seed data, deterministically generated. Full SoW, three call transcripts, and a stakeholder map ship in `shared/client/`.
+Demos 1 and 2 run against the same fictional D2C subscription coffee business. Five source systems (Shopify, Stripe, Klaviyo, Shipstation, GA4), ~115k rows of seed data, deterministically generated. Full SoW, three call transcripts, and a stakeholder map ship in `shared/client/`.
 
 ---
 
