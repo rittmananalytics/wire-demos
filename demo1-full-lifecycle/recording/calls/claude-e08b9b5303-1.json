@@ -1,0 +1,19 @@
+{
+  "tool": "claude",
+  "args": [
+    "-p",
+    "/wire:playbook-generate releases/01-data-foundation",
+    "--permission-mode",
+    "bypassPermissions",
+    "--allowedTools",
+    "Bash(dbt:*)",
+    "Read(~/.claude/plugins/**)",
+    "--strict-mcp-config",
+    "--mcp-config",
+    "<root>/shared/mcp-empty.json"
+  ],
+  "rc": 0,
+  "duration_s": 373,
+  "stdout": "I've written the playbook for 01-data-foundation: `.wire/releases/01-data-foundation/planning/01-data-foundation_playbook.md` (454 lines, 17 steps). It is template level, because no artifact in this release has been generated yet. A note at the top says to re-run it after requirements.\n\n**What it contains**\n\n| Section | Content |\n|---|---|\n| Control-flow diagram | A step-by-step diagram (BPMN style, drawn in Mermaid) covering six phases in order: Requirements, Design, Development, Testing, Deployment, Enablement. Each review that asks for changes loops back to its generate step. |\n| Steps | Requirements, workshops, conceptual model, pipeline design, logical model (optional), data model, mockups, pipeline, orchestration, dbt, semantic layer, dashboards, data quality, user acceptance testing (UAT), deployment, training, documentation. |\n| Closing sections | Daily rhythm, what Wire does and does not do, and a table of every Wire command used. |\n\n**Left out:** business rules (marked not applicable in `status.md`), seed data, viz catalog and data refactor (these apply only to dashboard-first releases), and dbtcharts and agents schema (the statement of work does not ask for them).\n\n**Open questions taken from the statement of work and engagement notes**\n\n- 2 questions block progress, so the diagram stops at each until it is answered:\n  - **OQ-7:** launch all markets in version 1, or in phases (owner: Becky). Blocks the start of Development.\n  - **OQ-3:** one agreed list of cancel reasons (Shopify has 8, Stripe 4, the customer service team 14; owners: Steph and Cathy). Blocks the churn model in dbt.\n- 10 more open questions (OQ-1, 2, 4, 5, 6, 8 to 12) and 4 data quality issues (DQ-1 to DQ-4) are placed at the steps they affect.\n\n**Dates need checking.** The playbook uses the statement of work's 12-week window, 27 January to 17 April 2026. That does not match the engagement record, which shows a creation date of 31 May 2026. The playbook marks these dates as provisional.\n\n**Other changes:**\n- I logged the run in `execution_log.md`. The file did not exist, so I created it.\n- The playbook was not sent to Confluence, because no page is set up for this release.\n- I changed one line: the template-level note at the top used an em-dash, which your organisation's style rules forbid, so I replaced it with a full stop.\n- `status.md` was not changed.\n- I have not checked that the diagram renders in a Mermaid viewer.\n",
+  "stderr": ""
+}

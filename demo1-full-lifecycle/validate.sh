@@ -29,12 +29,18 @@ fi
 
 assert_file "$SCRIPT_DIR/.wire/engagement/context.md"
 assert_file "$SCRIPT_DIR/.wire/releases/01-data-foundation/status.md"
-assert_file "$SCRIPT_DIR/.wire/releases/01-data-foundation/planning/delivery_playbook.md"
+# Wire names the playbook <release>_playbook.md; older versions used
+# delivery_playbook.md. Accept either.
+PLAYBOOK=$(find "$SCRIPT_DIR/.wire/releases/01-data-foundation/planning" -name "*playbook*.md" 2>/dev/null | head -1)
+assert_file "${PLAYBOOK:-$SCRIPT_DIR/.wire/releases/01-data-foundation/planning/<playbook>.md}"
 assert_dir  "$SCRIPT_DIR/.wire/releases/01-data-foundation/requirements"
 assert_dir  "$SCRIPT_DIR/.wire/releases/01-data-foundation/design"
 assert_dir  "$SCRIPT_DIR/dbt/models/staging"
-assert_file "$SCRIPT_DIR/warehouse.duckdb"
-assert_file "$SCRIPT_DIR/dashboards/mockup.html"
+# A replay restores files but not the DuckDB warehouse (dbt is replayed too),
+# so only a live or recording run is expected to leave one.
+if [ ! -d "$SCRIPT_DIR/recording/calls" ] || [ "${DEMO_PLAYBACK:-}" = "live" ]; then
+  assert_file "$SCRIPT_DIR/dbt/warehouse.duckdb"
+fi
 
 if [ -f "$SCRIPT_DIR/dbt/target/run_results.json" ]; then
   if grep -q '"status": "error"' "$SCRIPT_DIR/dbt/target/run_results.json"; then

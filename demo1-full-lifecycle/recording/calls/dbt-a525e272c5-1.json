@@ -1,0 +1,12 @@
+{
+  "tool": "dbt",
+  "args": [
+    "seed",
+    "--profiles-dir",
+    "<root>/shared/profiles"
+  ],
+  "rc": 0,
+  "duration_s": 2,
+  "stdout": "\u001b[0m11:59:19  Running with dbt=1.11.11\n\u001b[0m11:59:19  Registered adapter: duckdb=1.10.1\n\u001b[0m11:59:19  Unable to do partial parsing because saved manifest not found. Starting full parse.\n\u001b[0m11:59:19  [\u001b[33mWARNING\u001b[0m][MissingArgumentsPropertyInGenericTestDeprecation]: Deprecated\nfunctionality\nFound top-level arguments to test `relationships` defined on\n'stg_shopify__orders' in package 'acme_data_foundation'\n(models/staging/shopify/stg_shopify.yml). Arguments to generic tests should be\nnested under the `arguments` property.\n\u001b[0m11:59:19  [\u001b[33mWARNING\u001b[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.\nThere are 2 unused configuration paths:\n- models.acme_data_foundation.integration\n- models.acme_data_foundation.warehouse\n\u001b[0m11:59:20  Found 2 models, 2 seeds, 11 data tests, 603 macros\n\u001b[0m11:59:20  \n\u001b[0m11:59:20  Concurrency: 1 threads (target='dev')\n\u001b[0m11:59:20  \n\u001b[0m11:59:20  1 of 2 START seed file main.shopify_customers .................................. [RUN]\n\u001b[0m11:59:20  1 of 2 OK loaded seed file main.shopify_customers .............................. [\u001b[32mINSERT 10\u001b[0m in 0.03s]\n\u001b[0m11:59:20  2 of 2 START seed file main.shopify_orders ..................................... [RUN]\n\u001b[0m11:59:20  2 of 2 OK loaded seed file main.shopify_orders ................................. [\u001b[32mINSERT 20\u001b[0m in 0.01s]\n\u001b[0m11:59:20  \n\u001b[0m11:59:20  Finished running 2 seeds in 0 hours 0 minutes and 0.13 seconds (0.13s).\n\u001b[0m11:59:20  \n\u001b[0m11:59:20  \u001b[32mCompleted successfully\u001b[0m\n\u001b[0m11:59:20  \n\u001b[0m11:59:20  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=2\n\u001b[0m11:59:20  [\u001b[33mWARNING\u001b[0m][DeprecationsSummary]: Deprecated functionality\nSummary of encountered deprecations:\n- MissingArgumentsPropertyInGenericTestDeprecation: 1 occurrence\nTo see all deprecation instances instead of just the first occurrence of each,\nrun command again with the `--show-all-deprecations` flag. You may also need to\nrun with `--no-partial-parse` as some deprecations are only encountered during\nparsing.\n",
+  "stderr": ""
+}

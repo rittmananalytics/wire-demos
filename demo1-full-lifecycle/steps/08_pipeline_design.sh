@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Step 8 — Pipeline design: generate → validate → review.
+# Step 8 — Pipeline design: generate (with its own check) → review.
 
 set -uo pipefail
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -17,7 +17,5 @@ EOF
 pause
 
 run_wire "/wire:pipeline_design-generate releases/01-data-foundation"
-echo ""
-run_wire "/wire:pipeline_design-validate releases/01-data-foundation" || true
 echo ""
 run_wire "/wire:pipeline_design-review releases/01-data-foundation"

@@ -53,6 +53,8 @@ Engagement values:
 
 Skip the git branch check (do not create a feature branch — this is a demo). Skip Jira / Linear / Confluence / Notion. Skip /wire:new'\''s interactive prompts entirely; just write the files using Wire'\''s standard templates with the values above.
 
+Business rules are out of scope for this release: in status.md set business_rules generate, validate and review to not_applicable.
+
 Do NOT create any .wire/<project_id>/ folder — that is the deprecated flat layout. Use ONLY the engagement/releases two-tier structure.
 
 After you'\''re done, run `ls -laR .wire/` and show me the output.'

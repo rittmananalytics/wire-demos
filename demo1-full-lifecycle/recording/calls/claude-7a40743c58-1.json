@@ -1,0 +1,19 @@
+{
+  "tool": "claude",
+  "args": [
+    "-p",
+    "/wire:data_model-generate releases/01-data-foundation. If the data model registry has matches, adapt the confident match as the starting structure, use the other relevant matches loosely where they fit, and carry on without asking.",
+    "--permission-mode",
+    "bypassPermissions",
+    "--allowedTools",
+    "Bash(dbt:*)",
+    "Read(~/.claude/plugins/**)",
+    "--strict-mcp-config",
+    "--mcp-config",
+    "<root>/shared/mcp-empty.json"
+  ],
+  "rc": 0,
+  "duration_s": 1227,
+  "stdout": "## Data Model Specification Generated\n\nI wrote the data model specification and checked it automatically. It passed all 33 checks, with 0 failures.\n\n**File**: `.wire/releases/01-data-foundation/design/data_model_specification.md`\n\n| Item | Count |\n|---|---|\n| Staging models | 16 (one per source table) |\n| Integration models | 7 (6 from the pipeline design, 1 added) |\n| Warehouse models | 20 (6 dimensions, 8 facts, 6 summary tables) |\n| Seed files (small lookup tables kept in the project) | 4 |\n| Diagram of tables and links | 20 tables, 27 links |\n| Joins across source systems | 9, of which 5 carry high risk |\n\n### Data model registry\n\nThe registry had a confident match: the `subscription-commerce` vertical, schema `subscription_lifecycle`. Following your instruction, I adapted it as the starting structure without asking.\n\n- **Kept**: the registry's subscriber, subscription, subscription event, monthly retention and subscription revenue entities. They map to the customer and subscription tables, the subscription event fact, a new retention model and the MRR (monthly recurring revenue) fact.\n- **Dropped**: the registry's retention key for billing-system moves (Acme has none), its RFM (recency, frequency, monetary value) summary table, its extra event fields (the sources do not have them), and its three-level delivery grain.\n- **Renamed**: the registry's table names now follow Acme's naming pattern.\n- **Grain choices**: 5 places where the registry and the approved design differ in level of detail (DM-1 to DM-5). Each states both options, which was taken, and why.\n\nI used 3 cross-industry patterns loosely: customer identity matching, GA4 web sessions, and marketing attribution across channels. I considered and left out 4 others, with reasons. All of this is recorded in `.wire/engagement/context.md`.\n\n### Open items that block dbt code generation\n\n1. **OQ-3, cancellation reasons**: Cathy Marsh has not yet approved the proposed list. The cancellation reason table and the churn fact depend on it.\n2. **OQ-2, subscription state rules**: the spec uses a default (Stripe decides billing state, Shopify decides pause state). This rule needs to be agreed.\n3. **G7, new gap**: none of the 5 sources holds ad spend, so customer acquisition cost cannot be calculated. Either a spend feed is added or this metric moves out of v1. This needs a decision before the marketing dashboard.\n4. **Seeds to fill before build**: the cancellation reason list (once OQ-3 is settled) and about 800 manual customer re-links (DQ-1).\n\nThese items limit specific tables but do not block the build: OQ-1 (guest orders), OQ-4 and DQ-2 (attribution only covers 2024 onwards), OQ-5 (business customers), OQ-9 (pause versus cancel).\n\n`status.md`, `execution_log.md` and `decisions.md` are updated.\n\n### Next step\n\nReview the model with the analytics engineering lead:\n\n```\n/wire:data_model-review releases/01-data-foundation\n```\n\nThis review matters most. Wrong levels of detail or join keys cost much more to fix once dbt code exists.\n",
+  "stderr": ""
+}

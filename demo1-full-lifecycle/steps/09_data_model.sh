@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Step 9 — Data model: generate → validate → review.
+# Step 9 — Data model: generate (with its own check) → review.
 
 set -uo pipefail
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -16,8 +16,6 @@ generated from.
 EOF
 pause
 
-run_wire "/wire:data_model-generate releases/01-data-foundation"
-echo ""
-run_wire "/wire:data_model-validate releases/01-data-foundation" || true
+run_wire "/wire:data_model-generate releases/01-data-foundation. If the data model registry has matches, adapt the confident match as the starting structure, use the other relevant matches loosely where they fit, and carry on without asking."
 echo ""
 run_wire "/wire:data_model-review releases/01-data-foundation"

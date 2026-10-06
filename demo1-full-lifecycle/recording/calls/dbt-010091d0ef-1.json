@@ -1,0 +1,12 @@
+{
+  "tool": "dbt",
+  "args": [
+    "deps",
+    "--profiles-dir",
+    "<root>/shared/profiles"
+  ],
+  "rc": 0,
+  "duration_s": 3,
+  "stdout": "\u001b[0m11:59:17  Running with dbt=1.11.11\n\u001b[0m11:59:17  Updating lock file in file path: /Users/markrittman/GitHub/wire-demos2/demo1-full-lifecycle/dbt/package-lock.yml\n\u001b[0m11:59:17  Installing dbt-labs/dbt_utils\n\u001b[0m11:59:17  Installed from version 1.3.0\n\u001b[0m11:59:17  Updated version available: 1.4.1\n\u001b[0m11:59:17  \n\u001b[0m11:59:17  Updates available for packages: ['dbt-labs/dbt_utils']                 \nUpdate your versions in packages.yml, then run dbt deps\n",
+  "stderr": ""
+}

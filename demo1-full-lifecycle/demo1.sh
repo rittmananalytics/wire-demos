@@ -46,10 +46,10 @@ if [ ${#STEPS[@]} -eq 0 ]; then
    3. Copy synthesized client materials into .wire/engagement/
    4. /wire:playbook-generate — produce the demo's own BPMN roadmap
    5. Display the playbook on screen (the table of contents for the rest)
-   6. /wire:requirements-generate → -validate → -review
-   7. /wire:conceptual_model-generate → -validate → -review
-   8. /wire:pipeline_design-generate → -validate → -review
-   9. /wire:data_model-generate → -validate → -review
+   6. /wire:requirements-generate → -review
+   7. /wire:conceptual_model-generate → -review
+   8. /wire:pipeline_design-generate → -review
+   9. /wire:data_model-generate → -review
   10. /wire:dbt-generate (staging layer)
   11. dbt deps + seed + build (real DuckDB warehouse)
   12. Plant a deliberate failure (one not_null test will fail)
